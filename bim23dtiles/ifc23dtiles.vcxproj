@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2D513B58-4617-4087-A56A-75D086892EE1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ifc23dtiles</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>bim23dtiles</ProjectName>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>getbimshell</TargetName>
+    <OutDir>C:\pengzhengwei\cesiumlab\ifc23dtiles_20181220\x64\release\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\3rd\;..\3rd\gdal\include\gcore;..\3rd\gdal\include\port;..\3rd\gdal\include\ogr;..\3rd\gdal\include\alg;D:\originData\osg365Vs2017x64\include;..\3rd\glog\include;..\3rd\gflags\include;..\3rd\json;..\3rd\freeimage\include;..\3rd\xbsjauth\include;..\3rd\vcg;..\3rd\crunch\include;..\BimModelInput;..\3rd\draco\include;..\TilesStorage;..\3rd\stb\include;..\3rd\botan\include\botan-2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>shlwapi.lib;ws2_32.lib;osgd.lib;osgdbd.lib;osgutild.lib;osgviewerd.lib;..\3rd\gflags\lib\$(Configuration)\gflags_static.lib;..\3rd\glog\lib\$(Configuration)\glog.lib;..\3rd\gdal\lib\$(Configuration)\gdal_i.lib;..\3rd\xbsjauth\lib\$(Configuration)\register_engine.lib;..\3rd\freeimage\lib\$(Configuration)\freeimaged.lib;..\3rd\draco\lib\$(Configuration)\draco.lib;..\3rd\botan\lib\$(Configuration)\botand.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\originData\osg365Vs2017x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\pengzhengwei\cesiumlab\ifc23dtiles_20181220\3rd\botan\include\botan-2;..\3rd\gdal\include\gcore;..\3rd\gdal\include\port;..\3rd\gdal\include\ogr;..\3rd\gdal\include\alg;D:\originData\osg365Vs2017x64\include;..\3rd\glog\include;..\3rd\gflags\include;..\3rd\json;..\3rd\freeimage\include;..\3rd\xbsjauth\include;..\3rd\vcg;..\3rd\crunch\include;..\BimModelInput;..\3rd\draco\include;..\TilesStorage;..\3rd\stb\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>shlwapi.lib;ws2_32.lib;osg.lib;osgdb.lib;osgutil.lib;..\3rd\gflags\lib\$(Configuration)\gflags_static.lib;..\3rd\glog\lib\$(Configuration)\glog.lib;..\3rd\gdal\lib\$(Configuration)\gdal_i.lib;..\3rd\xbsjauth\lib\$(Configuration)\register_engine.lib;..\3rd\freeimage\lib\$(Configuration)\freeimage.lib;..\3rd\draco\lib\$(Configuration)\draco.lib;..\3rd\botan\lib\$(Configuration)\botan.lib;..\3rd\crunch\lib\$(Configuration)\crnlib.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\originData\osg365Vs2017x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="B3dm.h" />
+    <ClInclude Include="binpack.hpp" />
+    <ClInclude Include="BintreeSplitor.h" />
+    <ClInclude Include="Cesium.h" />
+    <ClInclude Include="custom_material.h" />
+    <ClInclude Include="ifcenginematerial.h" />
+    <ClInclude Include="ifcengineunit.h" />
+    <ClInclude Include="ModelInput.h" />
+    <ClInclude Include="OsgUtil.h" />
+    <ClInclude Include="PostProcess.h" />
+    <ClInclude Include="Register.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene2Gltf.h" />
+    <ClInclude Include="SceneOutput.h" />
+    <ClInclude Include="SceneOutputConfig.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SubScene.h" />
+    <ClInclude Include="SubScenePacker.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TexturePacker.h" />
+    <ClInclude Include="tiny_gltf.h" />
+    <ClInclude Include="VcgUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="B3dm.cpp" />
+    <ClCompile Include="BintreeSplitor.cpp" />
+    <ClCompile Include="Cesium.cpp" />
+    <ClCompile Include="bim23dtiles.cpp" />
+    <ClCompile Include="custom_json.cpp" />
+    <ClCompile Include="custom_material.cpp" />
+    <ClCompile Include="draco_gltf.cpp" />
+    <ClCompile Include="flat_shaders.cpp" />
+    <ClCompile Include="ModelInput.cpp" />
+    <ClCompile Include="ModelInputGdal.cpp" />
+    <ClCompile Include="normal_shaders.cpp" />
+    <ClCompile Include="OsgUtil.cpp" />
+    <ClCompile Include="PostProcess.cpp" />
+    <ClCompile Include="Register.cpp" />
+    <ClCompile Include="Scene2Gltf.cpp" />
+    <ClCompile Include="SceneOutput.cpp" />
+    <ClCompile Include="SceneOutputConfig.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="SubScene.cpp" />
+    <ClCompile Include="SubScenePacker.cpp" />
+    <ClCompile Include="TexturePacker.cpp" />
+    <ClCompile Include="tinygltf_impl.cpp" />
+    <ClCompile Include="VcgUtil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ifc23dtiles.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="fs.glsl" />
+    <None Include="task.json" />
+    <None Include="vs.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BimModelInput\BimModelInput.vcxproj">
+      <Project>{764ee145-b7ba-4f01-b333-de9fbbe622ae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TilesStorage\TilesStorage.vcxproj">
+      <Project>{7719c26c-0627-466d-b3df-d321306f6d23}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

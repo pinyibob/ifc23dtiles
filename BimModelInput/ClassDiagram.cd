@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="XBSJ::BimElement">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAEAAACEAAAAAAAAgA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="meshes" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XBSJ::BimScene">
+    <Position X="6.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAEACAhAAAAAAAAAAAAQAABAAAAAAAABACAA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XBSJ::ModelInputPlugin">
+    <Position X="0.5" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAABAAAGAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XBSJ::ModelInputReader">
+    <Position X="0.5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAIAAAAAAAAAAAAAAIAAAAAAAAAABA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XBSJ::ModelMaterial">
+    <Position X="13" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQIACAAAAACAAAAAABAAIAIAAAAAAAAAAAAAAAJAAAA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XBSJ::ModelMesh">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQACAEAAAABAAAAAAAABgAQAAAAAAAIAAABBAAAA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="material" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="XBSJ::ModelTexture">
+    <Position X="14.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAECAAAQAQAACAAAAAAARAAAAAAQAAgAAoAA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="std::list&lt;_Ty, _Alloc&gt;" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgEEqECAHBEgEhEAKEIAgISFAwAKJIAoQEkAhAHQgo=</HashCode>
+      <FileName>c:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\list</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="std::shared_ptr&lt;_Ty&gt;" Collapsed="true">
+    <Position X="13" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAkAAAAQgAAAAAAIICAAQAgAAAAAAA=</HashCode>
+      <FileName>c:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\memory</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="XBSJ::BimParam">
+    <Position X="6.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAQAAAAAAAAAAAAFAAAAAABAAAAAAAA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="XBSJ::BimPropety">
+    <Position X="8" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>BimModelInput.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

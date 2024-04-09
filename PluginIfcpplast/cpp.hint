@@ -1,0 +1,2 @@
+#define PLUGINIFCPPLAST_API __declspec(dllexport)
+#define PLUGINIFCPPLAST_API __declspec(dllimport)

@@ -1,0 +1,37 @@
+{
+  "inputs": [
+    {
+      "file": "C:\\gisdata\\bim\\中文\\test.lab",
+      "nolight": false,
+      "forceDoubleSide": true,
+      "customShader": false,
+      "textureGeometricErrorFactor": 16,
+      "splitPriority": "space",
+      "splitMaxDataSize": 2000000,
+      "splitUnit": "mesh",
+      "srs": "ENU:39.90691,116.39123",
+      "srsorigin": "0,0,0",
+      "filename": "300_04",
+      "savefilename": true, 
+      "encodeGBK": false,
+      "simplifyMesh": "after",
+      "colorRatio": 1,
+      "checked": true
+    }
+  ],
+  "geometricErrorFactor": 1,
+  "minGeometricError": 0.001,
+  "boxRadius2GeometricError": 1,
+  "nextGeometricErrorFactor": 0.25,
+  "tileMaxDataSize": 2000000,
+  "simplifyFactor": 0.2,
+  "output": {
+    "path": "C:\\gisdata\\bim\\test\\b1"
+  },
+  "delete": false,
+  "auth": {
+    "file": "C:\\Users\\kpf\\Documents\\cesiumlab\\cesiumlab.lic",
+    "server": "",
+    "user": ""
+  }
+}
