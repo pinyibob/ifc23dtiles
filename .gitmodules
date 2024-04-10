@@ -1,0 +1,3 @@
+[submodule "dt-3rd"]
+	path = dt-3rd
+	url = git@github.com:pinyibob/dt-3rd.git
