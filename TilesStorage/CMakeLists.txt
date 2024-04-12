@@ -1,18 +1,18 @@
-cmake_minimum_required(VERSION 3.20)
-
 project(TilesStorage)
 
-#option(debug "debug build type or release" OFF)
+file(GLOB headers ${CMAKE_CURRENT_LIST_DIR}/*.h)
+file(GLOB srcs ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CXX_STANDARD_REQUIRED ON)
+set(3rd_dir ${CMAKE_SOURCE_DIR}/dt-3rd)
 
-set(3rd_dir ${CMAKE_SOURCE_DIR}/etop-3rd)
+add_library(TilesStorage SHARED
+  ${headers}
+  ${srcs}
+)
 
-file(GLOB headers ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
-file(GLOB srcs ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+configure_dt_library(TilesStorage)
 
-add_library(TilesStorage SHARED ${headers} ${srcs})
+#find_package(mongo-c-driver)
 
 target_compile_definitions(TilesStorage PRIVATE 
     TILESSTORAGE_EXPORTS
@@ -25,24 +25,20 @@ target_include_directories(TilesStorage INTERFACE
 )
 
 target_include_directories(TilesStorage PRIVATE
-    ${3rd_dir}/json
 
-    /usr/local/include
     /usr/local/include/libbson-1.0
     /usr/local/include/libmongoc-1.0
-    /usr/include/
-    ${3rd_dir}/crunch-master/inc
-    ${3rd_dir}/gflags-master/build/include
+    #/usr/include/
+    ${3rd_dir}/json/include/
+
 )
 
 target_link_directories(TilesStorage PRIVATE
-    /usr/lib/x86_64-linux-gnu/
-    ${3rd_dir}/crunch-master/build/crnlib/
-    ${3rd_dir}/gflags-master/build/lib
+    /usr/local/bin/
+    #${3rd_dir}/gflags/build/lib
 )
 
 target_link_libraries(TilesStorage PRIVATE 
     BimModelInput
-    libmongoc-static-1.0.a
-    libbson-static-1.0.a
+    #mongo-c-driver
 )

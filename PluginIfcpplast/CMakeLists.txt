@@ -1,12 +1,7 @@
-cmake_minimum_required(VERSION 3.20)
-
 project(PluginIfcplusplus)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CXX_STANDARD_REQUIRED ON)
-
-set(3rd_dir ${CMAKE_SOURCE_DIR}/etop-3rd)
-set(ifcppsrc ${CMAKE_SOURCE_DIR}/etop-3rd/etop_ifcpp/IfcPlusPlus/src)
+set(3rd_dir ${CMAKE_SOURCE_DIR}/dt-3rd)
+set(ifcppsrc ${CMAKE_SOURCE_DIR}/dt-3rd/dt-ifcpp/IfcPlusPlus/src)
 
 #file(GLOB headers ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 #list(REMOVE_ITEM headers ${CMAKE_CURRENT_SOURCE_DIR}/LabGeometryConverter_old.h)
@@ -16,12 +11,15 @@ set(headers framework.h LabGeometryConverter.h
  LabRepresentationConverter.h LabStylesConverter.h md5.h
  PluginIfcpplast.h 
  )
+
 set(srcs md5.cpp PluginIfcpplast.cpp)
 
 find_package(glog REQUIRED)
 #find_package(OpenMP)
 
-#add_library(PluginIfcplusplus SHARED ${headers} ${srcs})
+add_library(PluginIfcplusplus SHARED ${headers} ${srcs})
+
+configure_dt_library(PluginIfcplusplus)
 
 target_compile_definitions(PluginIfcplusplus PRIVATE 
     PLUGINIFCPLUSPLUS_EXPORTS
@@ -60,32 +58,31 @@ target_include_directories(PluginIfcplusplus PRIVATE
     /usr/include/
     /usr/local/include
 
-    ${3rd_dir}/crunch-master/inc
-    ${3rd_dir}/gflags-master/build/include
+    ${3rd_dir}/crunch/inc
+    ${3rd_dir}/gflags/
 
 )
 
 target_link_directories(PluginIfcplusplus PRIVATE
-    ${3rd_dir}/gflags-master/build/lib
-    ${3rd_dir}/crunch-master/build/crnlib/
-    #${3rd_dir}/etop_ifcpp/build/Release
+    ${3rd_dir}/gflags/build/lib
+    ${3rd_dir}/crunch/build/crnlib/
     ${3rd_dir}/etop_ifcpp/build_debug/Debug
-    /usr/local/bin/
-    /usr/lib/x86_64-linux-gnu/
+    #/usr/local/bin/
+    #/usr/lib/x86_64-linux-gnu/
 )
 
 target_link_libraries(PluginIfcplusplus PRIVATE 
     BimModelInput
-    libosg.so
-    libosgDB.so
-    libosgUtil.so
-    libosgText.so
-    libOpenThreads.so
-    freeimage.so
+    #libosg.so
+    #libosgDB.so
+    #libosgUtil.so
+    #libosgText.so
+    #libOpenThreads.so
+    #freeimage.so
     #libzmq.so
     #libcrnlib.so
-    libgflags.a
-    libIfcPlusPlusd.a
-    glog::glog
+    glog
+    IfcPlusPlus
+    gflags
     #OpenMP::OpenMP_CXX
 )

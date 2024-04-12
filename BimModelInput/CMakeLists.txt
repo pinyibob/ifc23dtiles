@@ -1,10 +1,7 @@
 project(BimModelInput)
 
 file(GLOB headers ${CMAKE_CURRENT_LIST_DIR}/*.h)
-#set(headers ${CMAKE_CURRENT_LIST_DIR}/../thirdparty/json/include/nlohmann/json.hpp)
 file(GLOB srcs ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
-
-set(3rd_dir ${CMAKE_SOURCE_DIR}/etop-3rd)
 
 add_library(BimModelInput SHARED
   ${headers}
@@ -19,6 +16,7 @@ target_include_directories(
         ${CMAKE_INSTALL_INCLUDEDIR}
         ${CMAKE_CURRENT_LIST_DIR}/../dt-3rd/json/include/
         ${CMAKE_CURRENT_LIST_DIR}/../dt-3rd/stb/
+        ${CMAKE_CURRENT_LIST_DIR}/../dt-3rd/OpenSceneGraph/include/
 )
 
 target_compile_definitions(BimModelInput PRIVATE BIMMODELINPUT_EXPORTS)

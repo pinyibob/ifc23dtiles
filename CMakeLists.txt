@@ -48,8 +48,8 @@ endfunction()
 add_subdirectory(dt-3rd EXCLUDE_FROM_ALL)
 
 add_subdirectory(BimModelInput)
-#add_subdirectory(PluginIfcpplast)
-#add_subdirectory(TilesStorage)
+add_subdirectory(PluginIfcpplast)
+add_subdirectory(TilesStorage)
 #add_subdirectory(bim23dtiles)
 #add_subdirectory(etop-3rd)
 
