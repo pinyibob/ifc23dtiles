@@ -1,9 +1,9 @@
-// ÏÂÁÐ ifdef ¿éÊÇ´´½¨Ê¹´Ó DLL µ¼³ö¸ü¼òµ¥µÄ
-// ºêµÄ±ê×¼·½·¨¡£´Ë DLL ÖÐµÄËùÓÐÎÄ¼þ¶¼ÊÇÓÃÃüÁîÐÐÉÏ¶¨ÒåµÄ BIMMODELINPUT_EXPORTS
-// ·ûºÅ±àÒëµÄ¡£ÔÚÊ¹ÓÃ´Ë DLL µÄ
-// ÈÎºÎÆäËûÏîÄ¿ÉÏ²»Ó¦¶¨Òå´Ë·ûºÅ¡£ÕâÑù£¬Ô´ÎÄ¼þÖÐ°üº¬´ËÎÄ¼þµÄÈÎºÎÆäËûÏîÄ¿¶¼»á½«
-// BIMMODELINPUT_API º¯ÊýÊÓÎªÊÇ´Ó DLL µ¼ÈëµÄ£¬¶ø´Ë DLL Ôò½«ÓÃ´Ëºê¶¨ÒåµÄ
-// ·ûºÅÊÓÎªÊÇ±»µ¼³öµÄ¡£
+// ï¿½ï¿½ï¿½ï¿½ ifdef ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ DLL ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½òµ¥µï¿½
+// ï¿½ï¿½Ä±ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DLL ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½ï¿½ BIMMODELINPUT_EXPORTS
+// ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½Ê¹ï¿½Ã´ï¿½ DLL ï¿½ï¿½
+// ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½Ï²ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ë·ï¿½ï¿½Å¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½Ä¼ï¿½ï¿½Ð°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½á½«
+// BIMMODELINPUT_API ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ç´ï¿½ DLL ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ DLL ï¿½ï¿½ï¿½Ã´Ëºê¶¨ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ç±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½
 
 #pragma once
 
@@ -12,7 +12,7 @@
 #include <osg/Vec3f>
 #include <osg/Matrixd>
 #include <osg/BoundingBox>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 using namespace nlohmann; 
 
 namespace XBSJ
@@ -22,7 +22,7 @@ namespace XBSJ
 		ModelTextureMode_Wrap,
 		ModelTextureMode_Clamp
 	};
-	//ÎÆÀí¶¨Òå
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API ModelTexture {
 
 	public:
@@ -30,17 +30,17 @@ namespace XBSJ
 		~ModelTexture();
  
 	public:
-		string id; // ÎÆÀíid
-		string path; //ÎÆÀíÂ·¾¶
-		int    width = 0; //ÎÆÀí¿í¶È
-		int    height = 0;//ÎÆÀí¸ß¶È
-		ModelTextureMode mode_s = ModelTextureMode_Clamp; //ºáÏòÎÆÀíÌù·¨
-		ModelTextureMode mode_t = ModelTextureMode_Clamp; //×ÝÏòÎÆÀíÌù·¨
+		string id; // ï¿½ï¿½ï¿½ï¿½id
+		string path; //ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
+		int    width = 0; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int    height = 0;//ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
+		ModelTextureMode mode_s = ModelTextureMode_Clamp; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ModelTextureMode mode_t = ModelTextureMode_Clamp; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		unsigned int datasize = 0;
 
-		string imageData;  //ÎÆÀíµÄ¶þ½øÖÆÊý¾Ý
+		string imageData;  //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-		//Ô­Ê¼Êý¾ÝÍ¼Ïñ Ê¹ÓÃfreeimage´¦Àí
+		//Ô­Ê¼ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ Ê¹ï¿½ï¿½freeimageï¿½ï¿½ï¿½ï¿½
 		void * freeimage = nullptr;
 
 
@@ -84,7 +84,7 @@ namespace XBSJ
 		}
 	};
 
-	//²ÄÖÊ¶¨Òå
+	//ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API ModelMaterial {
 	public:
 		ModelColor diffuse = ModelColor(0.7, 0.7, 0.7);
@@ -95,9 +95,9 @@ namespace XBSJ
 
 
 		float     shinniness = 0;
-		//ÊÇ·ñ×Ô¶¨Òåshader
+		//ï¿½Ç·ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½shader
 		bool   customShader = false;
-		//ÊÇ·ñ½ûÓÃ¹âÕÕ
+		//ï¿½Ç·ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½
 		bool   nolight = false;
 
 		std::shared_ptr<ModelTexture> diffuseTexture = nullptr;
@@ -110,7 +110,7 @@ namespace XBSJ
 
 
 
-	//Èý½ÇÍø
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API ModelMesh {
 
 	public:
@@ -171,7 +171,7 @@ namespace XBSJ
 		int    id = -1;
 	};
 
-	//Ä£ÐÍÄÚµÄ¶ÔÏó¶¨Òå
+	//Ä£ï¿½ï¿½ï¿½ÚµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API  BimElement {
 
 	public:
@@ -179,24 +179,24 @@ namespace XBSJ
 
 	public:
 
-		//×Ó½Úµã
+		//ï¿½Ó½Úµï¿½
 		//list<std::shared_ptr<BimElement>> children;
 
-		//Èý½ÇÍøÁÐ±í
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
 		list<std::shared_ptr<ModelMesh>> meshes;
 
-		//bim ÊôÐÔ
+		//bim ï¿½ï¿½ï¿½ï¿½
 		list<BimPropety> propertes;
 
-		//½á¹¹²ÎÊý
+		//ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½
 		vector<ConstructPropety> constructProps;
 
 
 		string  name = "";
 
-		//id½øÐÐÍ³Ò»£¬¶¼ÊÇ×Ö·û´®ÐÎÊ½
+		//idï¿½ï¿½ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
 		string  id = "";
-		//Õâ¸öidÓÃÀ´±ê¼ÇÔ­Ê¼bim Èí¼þÀïµÄ ÕûÐÔid
+		//ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼bim ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½id
 		int     sid = 0;
 
 		osg::BoundingBoxd caculBox();
@@ -204,7 +204,7 @@ namespace XBSJ
 	};
 
 
-	//³¡¾°¶¨Òå
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API BimScene {
 	public:
 		BimScene() {
@@ -215,10 +215,10 @@ namespace XBSJ
 		list< std::shared_ptr<ModelMaterial>> materials;
 		list <std::shared_ptr<ModelTexture>> textures;
 
-		//ÊôÐÔ
+		//ï¿½ï¿½ï¿½ï¿½
 		vector<BimParam> params;
 
-		//½á¹¹²ÎÊý
+		//ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½
 		vector<ConstructParam> constructParams;
 
 		std::shared_ptr<ModelMaterial> getMaterial(std::shared_ptr<ModelMaterial> & material);
@@ -227,47 +227,47 @@ namespace XBSJ
 
 		int getParamIndex(string name, string type = "string");
 
-		//Í¶Ó°²ÎÊý
+		//Í¶Ó°ï¿½ï¿½ï¿½ï¿½
 		string crs = "";
-		//ifcplus½«»ùµã×ø±êºÍ½Ç¶È¾ù´æ´¢ÔÚÊý×éÖÐ
+		//ifcplusï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í½Ç¶È¾ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		vector<double> mapCoords;
 
-		//»ùµã×ø±ê
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		string coords = "";
 
-		//½Ç¶È
+		//ï¿½Ç¶ï¿½
 		string angles = "";
 
 		
 	};
 
 
-	//¶ÁÈ¡Æ÷¶¨Òå
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API ModelInputReader {
 	public:
-		//Ê¹ÓÃ²ÎÊý³õÊ¼»¯
+		//Ê¹ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 		virtual bool init(json & param) = 0;
 		virtual bool init(json & param, json & ids) = 0;
 
-		//»ñµÃÐèÒª¼¸´Î¶ÁÈ¡
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Î¶ï¿½È¡
 		virtual int  getNumScene() = 0;
 
-		//¶ÁÈ¡µÚ¼¸´Î
+		//ï¿½ï¿½È¡ï¿½Ú¼ï¿½ï¿½ï¿½
 		virtual std::shared_ptr<BimScene>  loadScene(int i) = 0;
 
 
-		//»ñÈ¡ÍêÕûµÄ³¡¾°Ê÷
+		//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½
 		virtual bool fillSceneTree(json & sceneTree) {
 				
 			return false;
 		};
 	};
 
-	//²å¼þ¶¨Òå
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API   ModelInputPlugin {
 
 	public:
-		//²å¼þµÄÃû³Æ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		string name;
 		virtual bool supportFormat(string & ext) = 0;
 
@@ -277,7 +277,7 @@ namespace XBSJ
 		static list<std::shared_ptr<ModelInputPlugin>>  plugins;
 	};
 
-	//½ø¶È±¨¸æ¸¨ÖúÀà
+	//ï¿½ï¿½ï¿½È±ï¿½ï¿½æ¸¨ï¿½ï¿½ï¿½ï¿½
 	class BIMMODELINPUT_API ProgressHelper
 	{
 	public:

@@ -45,7 +45,7 @@ function(configure_dt_library targetName)
     )
 endfunction()
 
-add_subdirectory(thirdparty EXCLUDE_FROM_ALL)
+add_subdirectory(dt-3rd EXCLUDE_FROM_ALL)
 
 add_subdirectory(BimModelInput)
 #add_subdirectory(PluginIfcpplast)

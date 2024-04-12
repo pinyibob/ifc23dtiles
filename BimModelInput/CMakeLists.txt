@@ -17,7 +17,8 @@ target_include_directories(
     BimModelInput
         SYSTEM PUBLIC
         ${CMAKE_INSTALL_INCLUDEDIR}
-        ${CMAKE_CURRENT_LIST_DIR}/../thirdparty/json/include/nlohmann
+        ${CMAKE_CURRENT_LIST_DIR}/../dt-3rd/json/include/
+        ${CMAKE_CURRENT_LIST_DIR}/../dt-3rd/stb/
 )
 
 target_compile_definitions(BimModelInput PRIVATE BIMMODELINPUT_EXPORTS)
@@ -31,8 +32,9 @@ PUBLIC_HEADER "BimModelInput.h")
 
 target_link_libraries(BimModelInput 
     PUBLIC
-    OpenSceneGraph
-    glog::glog
-    ZeroMQ
+    #json
+    #OpenSceneGraph
+    glog
+    #ZeroMQ
     crnlib
 )

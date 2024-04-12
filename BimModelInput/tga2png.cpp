@@ -11,6 +11,10 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
+#ifndef WIN32
+#include <unistd.h>
+#endif
+
 #include <webp/encode.h>
 
 using namespace std;
