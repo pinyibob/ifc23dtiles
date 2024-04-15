@@ -1,0 +1,36 @@
+{
+    "inputs": [
+        { 
+            "file": "/mnt/e/zpy/F1.ifc",
+            "nolight": true,
+            "forceDoubleSide": false,
+            "customShader": false,
+            "textureGeometricErrorFactor": 16,
+            "splitPriority": "material",
+            "splitMaxDataSize": 2000000,
+            "splitUnit": "mesh",
+            "srs": "ENU:22.599869,113.986992",
+            "srsorigin": "0,0,0",
+            "filename": "test",
+            "savefilename": true,
+            "encodeGBK": false,
+            "simplifyMesh": "none",
+            "colorRatio": 1
+        }
+       
+    ],
+    "minGeometricError": 0.001,
+    "boxRadius2GeometricError": 1,
+    "nextGeometricErrorFactor": 0.25,
+    "tileMaxDataSize": 2000000,
+    "simplifyFactor": 1,
+    "output": {
+        "path": "/mnt/e/zpy/opt/"
+    },
+    "delete": false,
+    "auth": {
+        "file": "/mnt/pengzhengwei/etop.lic",
+        "server": "",
+        "user": ""
+    }
+}
