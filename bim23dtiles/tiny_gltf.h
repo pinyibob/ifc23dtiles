@@ -52,7 +52,7 @@
 #include <android/asset_manager.h>
 #endif
 #endif
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 
 namespace tinygltf {
 

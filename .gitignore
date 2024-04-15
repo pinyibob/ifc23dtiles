@@ -2,3 +2,5 @@ build/
 .vscode/
 etop-3rd
 thirdparty
+bin
+binary

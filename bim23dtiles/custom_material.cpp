@@ -7,7 +7,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "json.hpp"
+#include <nlohmann/json.hpp>
+
 using nlohmann::json;
 
 #include "custom_material.h"
@@ -35,10 +36,10 @@ json getFlatJsonMaterial(int techniqueID, int textureID);
 json getNormalJsonTechnique(int programid);
 json getNormalJsonMaterial(int techniqueID, int textureID);
 
-// Î´Ê¹ÓÃ£¬Î´ÑéÖ¤£¬¿ÉÄÜÓÐÎÊÌâ vtxf 20180107
+// Î´Ê¹ï¿½Ã£ï¿½Î´ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ vtxf 20180107
 int addTexture(tinygltf::Model& model, unsigned char* imageData, int imageDataSize, std::string imageType, bool repeat) {
 	// 1 add BufferView
-	// ¼Ù¶¨image¶¼ÔÚbuffer2ÖÐ
+	// ï¿½Ù¶ï¿½imageï¿½ï¿½ï¿½ï¿½buffer2ï¿½ï¿½
 	if (model.buffers.size() < 3) {
 		model.buffers.resize(3);
 	}
@@ -95,7 +96,7 @@ int addTexture(tinygltf::Model& model, unsigned char* imageData, int imageDataSi
 	tinygltf::Value::Object compressedImage3DTiles;
 	compressedImage3DTiles["crunch"] = tinygltf::Value(crunch);
 
-	// TODO £¨ÔÝ²»¼ÓÈë)
+	// TODO ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½ï¿½)
 	//image.extras = tinygltf::Value(compressedImage3DTiles);
 
 	model.images.push_back(std::move(image));
@@ -103,7 +104,7 @@ int addTexture(tinygltf::Model& model, unsigned char* imageData, int imageDataSi
 
 	// 3 add Sampler
 	tinygltf::Sampler sampler;
-	//¶ÔÓÚcrnÎÆÀíÑ¹Ëõ£¬ÒÑ¾­Éú³Émipmap£¬²»ÄÜÔÚÕâÀïÔÙÉèÖÃÁË LINEAR_MIPMAP_LINEAR
+	//ï¿½ï¿½ï¿½ï¿½crnï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½mipmapï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ LINEAR_MIPMAP_LINEAR
 	sampler.minFilter = imageType == "crn" ? TINYGLTF_TEXTURE_FILTER_LINEAR : TINYGLTF_TEXTURE_FILTER_LINEAR_MIPMAP_LINEAR;
 	sampler.magFilter = TINYGLTF_TEXTURE_FILTER_LINEAR;
 	sampler.wrapS = repeat ? TINYGLTF_TEXTURE_WRAP_REPEAT : TINYGLTF_TEXTURE_WRAP_CLAMP_TO_EDGE;
@@ -112,7 +113,7 @@ int addTexture(tinygltf::Model& model, unsigned char* imageData, int imageDataSi
 	const int sampleid = model.samplers.size() - 1;
 
 	// 4 add Texture
-	// tinygltfÖÐ¶¼Ã»ÓÐformat¡¢internalFormat¡¢target¡¢typeÕâÐ©ÊôÐÔ£¬¿ÉÄÜÓÃµÄ¶¼ÊÇÄ¬ÈÏÖµ°É¡£¡£
+	// tinygltfï¿½Ð¶ï¿½Ã»ï¿½ï¿½formatï¿½ï¿½internalFormatï¿½ï¿½targetï¿½ï¿½typeï¿½ï¿½Ð©ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÃµÄ¶ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµï¿½É¡ï¿½ï¿½ï¿½
 	//"textures": {
 	//	"texture_Image0001": {
 	//		"format": 6408,
@@ -136,7 +137,7 @@ int addTexture(tinygltf::Model& model, unsigned char* imageData, int imageDataSi
 int addShaderBufferView(tinygltf::Model& model, const std::string & shaderString) {
 	const int shaderStringLength = shaderString.length();
 
-	// ¼Ù¶¨shader¶¼ÔÚbuffer1ÖÐ
+	// ï¿½Ù¶ï¿½shaderï¿½ï¿½ï¿½ï¿½buffer1ï¿½ï¿½
 	//if (model.buffers.size() <= 1) {
 	//	model.buffers.push_back(tinygltf::Buffer());
 	//}
@@ -192,7 +193,7 @@ int addShader(tinygltf::Model& model, json jsonShader) {
 	tinygltf::Value jsonShaderValue;
 	tinygltf2::ParseJsonAsValue(&jsonShaderValue, jsonShader);
 
-	// vtxf ÎªÁË°Ñvalue¸øÈû½øÈ¥£¬»¨ÁËÁ½Ð¡Ê±¡£¡£
+	// vtxf Îªï¿½Ë°ï¿½valueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Ê±ï¿½ï¿½ï¿½ï¿½
 	auto & KHR_techniques_webgl = model.extensions["KHR_techniques_webgl"];
 	auto & KHR_techniques_webglObject = KHR_techniques_webgl.Get<tinygltf::Value::Object>();
 	if (!KHR_techniques_webgl.Has("shaders")) {
@@ -228,7 +229,7 @@ int addProgram(tinygltf::Model& model, int vsid, int fsid) {
 	tinygltf::Value jsonProgramValue;
 	tinygltf2::ParseJsonAsValue(&jsonProgramValue, jsonProgram);
 
-	// vtxf ÎªÁË°ÑjsonTechniqueValue¸øÈû½øÈ¥£¬»¨ÁËÁ½Ð¡Ê±¡£¡£
+	// vtxf Îªï¿½Ë°ï¿½jsonTechniqueValueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Ê±ï¿½ï¿½ï¿½ï¿½
 	auto & KHR_techniques_webgl = model.extensions["KHR_techniques_webgl"];
 	auto & KHR_techniques_webglObject = KHR_techniques_webgl.Get<tinygltf::Value::Object>();
 	if (!KHR_techniques_webgl.Has("programs")) {
@@ -246,7 +247,7 @@ int addTechnique(tinygltf::Model & model, const json & jsonTechnique) {
 	tinygltf::Value jsonTechniqueValue;
 	tinygltf2::ParseJsonAsValue(&jsonTechniqueValue, jsonTechnique);
 
-	// vtxf ÎªÁË°ÑjsonTechniqueValue¸øÈû½øÈ¥£¬»¨ÁËÁ½Ð¡Ê±¡£¡£
+	// vtxf Îªï¿½Ë°ï¿½jsonTechniqueValueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Ê±ï¿½ï¿½ï¿½ï¿½
 	auto & KHR_techniques_webgl = model.extensions["KHR_techniques_webgl"];
 	auto & KHR_techniques_webglObject = KHR_techniques_webgl.Get<tinygltf::Value::Object>();
 	if (!KHR_techniques_webgl.Has("techniques")) {

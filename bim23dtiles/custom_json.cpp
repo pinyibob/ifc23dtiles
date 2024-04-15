@@ -7,7 +7,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "json.hpp"
+#include <nlohmann/json.hpp>
+
 using nlohmann::json;
 
 int XBSJ_VERTEX_SHADER = 35633;

@@ -25,20 +25,25 @@ target_include_directories(TilesStorage INTERFACE
 )
 
 target_include_directories(TilesStorage PRIVATE
-
+    #直接用linux包管理器下载 cmake暂时不好配置
     /usr/local/include/libbson-1.0
     /usr/local/include/libmongoc-1.0
     #/usr/include/
     ${3rd_dir}/json/include/
+    #${3rd_dir}/mongo-c-driver/src/libmongoc/src/
+    #${3rd_dir}/mongo-c-driver/src/libbson/src/
 
 )
 
 target_link_directories(TilesStorage PRIVATE
-    /usr/local/bin/
+    #/usr/local/bin/
     #${3rd_dir}/gflags/build/lib
 )
 
 target_link_libraries(TilesStorage PRIVATE 
     BimModelInput
-    #mongo-c-driver
+    #libbson
+    #libmongoc
+    libmongoc-static-1.0.a
+    libbson-static-1.0.a
 )

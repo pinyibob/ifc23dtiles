@@ -46,7 +46,7 @@ namespace XBSJ {
 		//构造存储器
 		storage = TilesStorage::createStorage(coutput, [](string info, TilesStorage::LogLevel level, string file, long line) {
 
-			google::LogMessage(file.c_str(), (int)line, (int)level).stream() << info;
+			//google::LogMessage(file.c_str(), (int)line, (int)level).stream() << info;
 
 		});
 		if (!storage) {

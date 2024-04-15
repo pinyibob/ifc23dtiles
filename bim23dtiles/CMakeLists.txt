@@ -1,8 +1,6 @@
-cmake_minimum_required(VERSION 3.20)
-
 project(bim23dtiles)
 
-set(3rd_dir ${CMAKE_SOURCE_DIR}/etop-3rd)
+set(3rd_dir ${CMAKE_SOURCE_DIR}/dt-3rd)
 
 # Register.h Register.cpp 
 set(headers stdafx.h B3dm.h binpack.hpp BintreeSplitor.h Cesium.h custom_material.h 
@@ -22,6 +20,8 @@ find_package(glog REQUIRED)
 
 add_executable(bim23dtiles ${headers} ${srcs})
 
+configure_dt_library(bim23dtiles)
+
 #target_compile_definitions(bim23dtiles PRIVATE 
 #    bim23dtiles_EXPORTS
 #)
@@ -30,70 +30,73 @@ target_include_directories(bim23dtiles PRIVATE
     ${3rd_dir}/stb/include/
     ${3rd_dir}/json/
 
-    /usr/include/
-    /usr/local/include
-    /usr/local/include/ifcpp/IFC4X3/include
+    #/usr/include/
+    #/usr/local/include
+    #/usr/local/include/ifcpp/IFC4X3/include
 
-    ${3rd_dir}/crunch-master/inc
+    ${3rd_dir}/crunch/inc/
+    ${3rd_dir}/OpenSceneGraph/src/
+    ${3rd_dir}/freeimage/source/
+    ${3rd_dir}/draco/src/
 
-    ${3rd_dir}/gflags-master/build/include
+    #${3rd_dir}/gflags-master/build/include
 
-    ${3rd_dir}/ifcplusplus-master/IfcPlusPlus/src/ifcpp/geometry
-    ${3rd_dir}/ifcplusplus-master/IfcPlusPlus/src/external
-    ${3rd_dir}/ifcplusplus-master/IfcPlusPlus/src/external/Carve/src/include
+    ${3rd_dir}/ifcplusplus/IfcPlusPlus/src/ifcpp/geometry
+    ${3rd_dir}/ifcplusplus/IfcPlusPlus/src/external
+    ${3rd_dir}/ifcplusplus/IfcPlusPlus/src/external/Carve/src/include
 
-    ${3rd_dir}/vcglib-main/
-    ${3rd_dir}/vcglib-main/eigenlib/
+    ${3rd_dir}/vcglib/
+    ${3rd_dir}/vcglib/eigenlib/
 
 )
 
 target_link_directories(bim23dtiles PRIVATE
-    ${3rd_dir}/crunch-master/build/crnlib/
-    ${3rd_dir}/gflags-master/build/lib/
+    #${3rd_dir}/crunch-master/build/crnlib/
+    #${3rd_dir}/gflags-master/build/lib/
     
-    /usr/lib/x86_64-linux-gnu/
+    #/usr/lib/x86_64-linux-gnu/
     /usr/local/bin/
 )
 
-if(debug)
-    target_link_libraries(bim23dtiles PRIVATE
-        BimModelInput
-        TilesStorage
-        PluginIfcplusplus
-        shlwapi.lib
-        ws2_32.lib
-        osgd.lib
-        osgdbd.lib
-        osgutild.lib
-        #osgtextd.lib
-        OpenThreadsd.lib
-        freeimaged.lib
-        libgflags.a
-        glog.lib
-        gdal_i.lib
-    #   xbsj_taskreporter.lib
-        Carved.lib
-        IfcPlusPlusd.lib
-        draco.lib
-        register_engine.lib
-        #botand.lib
-    )
-else()
+# target_link_libraries(bim23dtiles PRIVATE
+#     BimModelInput
+#     TilesStorage
+#     PluginIfcplusplus
+#     #shlwapi.lib
+#     #ws2_32.lib
+#     osgd.lib
+#     #osgdbd.lib
+#     #osgutild.lib
+#     #osgtextd.lib
+#     #OpenThreadsd.lib
+#     #freeimaged.lib
+#     gflags
+#     glog
+#     IfcPlusPlus
+#     vcglib
+#     gdal
+#     draco
+#     freeimage
+    
+#     #Carve
+#     #register_engine.lib
+#     #botand.lib
+# )
+target_link_libraries(bim23dtiles PRIVATE
+    BimModelInput
+    TilesStorage
 
-    target_link_libraries(bim23dtiles PRIVATE 
-        BimModelInput
-        TilesStorage
-        libosg.so
-        libosgDB.so
-        libosgUtil.so
-        libosgText.so
-        libOpenThreads.so
-        freeimage.so
-        glog::glog
-        libgflags.a
-        libdraco.so
-        libbson-1.0.so
-        libgdal.so
-    )
+    libosg.so
+    libosgDB.so
+    libosgUtil.so
+    libosgText.so
+    libOpenThreads.so
+    
+    freeimage.so
+    glog
+    gflags
 
-endif()
+    libdraco.so
+    libbson-1.0.so
+    libgdal.so
+)

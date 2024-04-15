@@ -31,6 +31,10 @@ set(CMAKE_RELEASE_POSTFIX ${iproject_RELEASE_POSTFIX})
 set(CMAKE_MINSIZEREL_POSTFIX ${iproject_RELEASE_POSTFIX})
 set(CMAKE_RELWITHDEBINFO_POSTFIX ${iproject_RELEASE_POSTFIX})
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+
 function(configure_dt_library targetName)
     # if (MSVC)
     #     target_compile_options(${targetName} PRIVATE /W4 /WX /wd4201 /bigobj)
@@ -50,8 +54,9 @@ add_subdirectory(dt-3rd EXCLUDE_FROM_ALL)
 add_subdirectory(BimModelInput)
 add_subdirectory(PluginIfcpplast)
 add_subdirectory(TilesStorage)
-#add_subdirectory(bim23dtiles)
-#add_subdirectory(etop-3rd)
+add_subdirectory(bim23dtiles)
+
+#install(TARGETS draco)
 
 #### install steps todo!
 
