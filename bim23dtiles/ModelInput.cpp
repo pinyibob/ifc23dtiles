@@ -193,8 +193,8 @@ namespace XBSJ {
 		return true;
 	}
 
-	bool ModelInput::GenInputs(list<shared_ptr<ModelInput>> & inputs, json & cinput,json & idsinput) {
-
+	bool ModelInput::GenInputs(list<shared_ptr<ModelInput>> & inputs, json & cinput,json & idsinput)
+	 {
 		//插件
 		string plugin = "";
 

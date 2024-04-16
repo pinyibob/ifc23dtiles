@@ -19,7 +19,6 @@ DEFINE_string(taskname, "task_pdtile", "?????????");
 DEFINE_string(taskserver, "tcp://127.0.0.1:5555", "??????????");
 //#endif
 
-
 DEFINE_string(task, "", "???????");
 DEFINE_bool(machinecode, false, "?????????????");
 
@@ -34,7 +33,6 @@ using namespace XBSJ;
 #include <filesystem>
 using namespace std::filesystem;
 
-
 void errorOut(string error) {
 
 	LOG(ERROR) << error << ":" << FLAGS_task;
@@ -45,12 +43,8 @@ void errorOut(string error) {
 	cout << ret.dump(4) << endl;
 }
 
-
-
 int main(int argc, char * argv[])
 {
- 
-	//1??????????
 	auto exefolder = getFileFolder(argv[0]);
 	if (exefolder.empty())
 		exefolder = ".";
@@ -62,9 +56,6 @@ int main(int argc, char * argv[])
 #endif
 
 	google::InitGoogleLogging(argv[0]);
-	//????????????????
-	//FLAGS_alsologtostderr = 1;
-	//???????exe??????
 	if (FLAGS_log_dir == "")
 		FLAGS_log_dir = exefolder;
 
@@ -73,23 +64,18 @@ int main(int argc, char * argv[])
 	gflags::ParseCommandLineFlags(&argc, &argv, false);
 	gflags::ParseCommandLineFlags(&argc, &argv, false);
 
-
-	//LOG(ERROR) << "?????????" << ETOP::Register::GetMachineCode() << endl;
-
-	//?????
 	if (FLAGS_task.empty()) {
 
 		errorOut("task ??????");
 		return 0;
 	}
 
-
-	//???��??????
+	//task file open
 	json taskConfig;
 	if (!FLAGS_task.empty()) {
 		ifstream infile(FLAGS_task, ios::in);
 		if (!infile) {
-			errorOut("????????????");
+			errorOut("task file open error");
 			return 0;
 		}
 		try
@@ -99,18 +85,18 @@ int main(int argc, char * argv[])
 		catch (const std::exception&)
 		{
 			infile.close();
-			errorOut("??????????????");
+			errorOut("error occurred");
 			return 0;
 		}
 		infile.close();
 	}
 
-	//???ids
+	//bim shell ids
 	json idsConfig;
 	if (!FLAGS_shellids.empty()) {
 		ifstream infile(FLAGS_shellids, ios::in);
 		if (!infile) {
-			errorOut("???ID????????");
+			errorOut("id file open error");
 			return 0;
 		}
 		try
@@ -126,7 +112,7 @@ int main(int argc, char * argv[])
 		infile.close();
 	}
 
-	//?????��????????
+	//whether delete task input json
 	auto cdelete = taskConfig["delete"];
 	if (cdelete.is_boolean()) {
 		if (cdelete.get<bool>()) {
@@ -143,22 +129,22 @@ int main(int argc, char * argv[])
 		}
 	}
 
-
-	//??????????????????????????????????????????
-	// auto cauth = taskConfig["auth"];
-	// if (!cauth.is_object()) {
-	// 	errorOut("???auth????");
-	// 	return 0;
-	// }
-
-	//????????????
+	//get task inputs
 	auto cinputs = taskConfig["inputs"];
 	if (!cinputs.is_array()) {
 		ProgressHelper::finish();
 		LOG(ERROR) << "input config failed";
 		return false;
 	}
-	
+		
+	// authorization test
+	{
+	// auto cauth = taskConfig["auth"];
+	// if (!cauth.is_object()) {
+	// 	errorOut("???auth????");
+	// 	return 0;
+	// }
+
 	bool needPayMode = true;
 	/*
 	bool needPayMode = false;
@@ -180,11 +166,7 @@ int main(int argc, char * argv[])
 	}
 	*/
 
-	
-	//#define UNAUTH 0
-
 //#ifndef UNAUTH
-//??????
 	//cauth["tool"] = "bim23tiles";
 
 	//ETOP::Register::createLic();
@@ -196,44 +178,26 @@ int main(int argc, char * argv[])
 	// 	LOG(ERROR) << "?????????" << ETOP::Register::GetMachineCode() << endl;
 	// 	return 0;
 	// }
-	
-
 //#endif 
-
-
-	//?��?????????????��???????? enu???
-
-
-	//??��???????????????????????ok?????????? 
-	json ret;
-	ret["auth"] = "ok";
-	cout << ret.dump() << endl;
-
+	}
 
 	ProgressHelper::init(FLAGS_taskserver, FLAGS_taskname);
-
 	ProgressHelper pglobal("bime23dtiles", 1);
  
 	clock_t startTime, endTime;
-	startTime = clock();//??????
+	startTime = clock();
 
-	//???????
-	shared_ptr<SceneOutputConfig>  output = make_shared<SceneOutputConfig>();
+	//output task
+	shared_ptr<SceneOutputConfig> output = make_shared<SceneOutputConfig>();
 	if (!output->config(taskConfig)) {
 		ProgressHelper::finish();
 		errorOut("output config failed");
 		return 0;
 	}
  
- 
-
-	//?????????????????��???
 	{
-
-		//1, ??????????????��??
-		list<shared_ptr<ModelInput>>  inputs;
-
-
+		//init exe plugins
+		list<shared_ptr<ModelInput>> inputs;
 		for (size_t i = 0; i < cinputs.size(); i++)
 		{
 			if (!ModelInput::GenInputs(inputs, cinputs[i],idsConfig)) {
@@ -242,9 +206,8 @@ int main(int argc, char * argv[])
 		}
  
 		ProgressHelper pinputs("process inputs", inputs.size(), 0.95);
+
 		size_t i = 0;
-
-
 		for (auto it = inputs.begin(); it != inputs.end();)
 		{
 			auto input = *it;
@@ -252,36 +215,32 @@ int main(int argc, char * argv[])
 			i++;
 			ProgressHelper pinput("process input:" + str(i), 1);
 
-			//1?????????????
+			//1. read input ifc data
 			{
 				ProgressHelper pinput("load input:" + str(i), 1, 0.8);
-
 				if (!input->load()) {
 					LOG(WARNING) << "input config failed";
-					inputs.erase(it++);
+					it = inputs.erase(it);
 					continue;
 				}
 			}
 			
-			//2?????????????
+			//2 output 3dtiles data
 			{
 				ProgressHelper pinput("process input:" + str(i), 1, 0.2);
 				if (!output->process(input, i)) {
 					errorOut("writeTileset failed");
-					inputs.erase(it++);
+					it = inputs.erase(it);
 					continue;
 				}
 			}
-			
 
-			inputs.erase(it++);
-	
-			
+			it = inputs.erase(it);
 		}
  
 	}
 
-	//????????
+	//output 3dtiles data last work
 	{
 		ProgressHelper pinputs("postProcess", 1, 0.05);
 		if (!output->postProcess()) {
@@ -289,11 +248,9 @@ int main(int argc, char * argv[])
 		}
 	}
 
-
 	LOG(INFO) << "finished";
 	ProgressHelper::finish();
-	endTime = clock();//???????
+	endTime = clock();
 	cout << "The run time is: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
 	return 0;
 }
-

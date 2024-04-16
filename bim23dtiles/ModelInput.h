@@ -1,14 +1,12 @@
 #pragma once 
 
 #include "stdafx.h"  
+
 #include "BimModelInput.h"
 
 namespace XBSJ {
 
 	class SceneOutputConfig;
-
-  
-
 	//对应了一个场景的输入 全部读入内存
 	class ModelInput
 	{
@@ -16,8 +14,7 @@ namespace XBSJ {
 		ModelInput(json & config,  shared_ptr<ModelInputReader> & reader, int index);
 		~ModelInput();
 
-		bool  load();
-
+		bool load();
 
 		//模型坐标转全球坐标
 		osg::Vec3d  toGloble(osg::Vec3d  v);
@@ -37,7 +34,7 @@ namespace XBSJ {
 		string inputfolder = "";
 
 		//是否强制设置为双面
-		bool     forceDoubleSide = false;
+		bool forceDoubleSide = false;
 
 		//调整纹理是否缩放的太厉害
 		double textureScaleFactor = 1.3;
@@ -59,7 +56,6 @@ namespace XBSJ {
 		//none 表示对场景不分割
 		string splitUnit = "mesh";
 
-
 		//颜色倍率
 		double colorRatio = 1;
  
@@ -71,23 +67,17 @@ namespace XBSJ {
 		//汉字编码
 		bool   encodeGBK = false;
 
-
 		//ifc引擎
 		string  ifcengine = "ifcengine";
 
 		//是否精简三角网  none  不精简， before 合并前 ， after 合并后
 		string simplifyMesh = "before";
- 
-
 
 		osg::Matrixd   bakeMatrix = osg::Matrixd::identity();
-
 
 		//输入数据的投影 以及偏移位置
 		string  srs = "ENU:39.90691,116.39123";
 		osg::Vec3d  srsorigin = osg::Vec3d(0, 0, 0);
-
-
 
 		//数据到wgs84的变换
 		void * transform4326 = nullptr;
@@ -95,13 +85,9 @@ namespace XBSJ {
 
 		osg::Matrixd enuMatrix;
 
-
 		list<shared_ptr<ModelTexture>> textureCaches;
 
-
-		
 		//void  sceneSpheres(SceneOutputConfig * config, list<json> & nodespheres);
-
 		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json & config);
 		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json & config, json & ids);
 		static string ExeFolder;
@@ -112,7 +98,6 @@ namespace XBSJ {
   
 		static bool InitPlugins();
  
- 
 		shared_ptr<ModelInputReader> reader;
 		int readerIndex = -1;
 	 
@@ -121,6 +106,5 @@ namespace XBSJ {
 		void updateSphere(json & j);
 		
 	};
-
 
 }
