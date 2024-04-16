@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
+#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(szifc23dtiles)
+project(szifc23dtiles C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED ON)
@@ -50,6 +51,13 @@ function(configure_dt_library targetName)
 endfunction()
 
 add_subdirectory(dt-3rd EXCLUDE_FROM_ALL)
+install(TARGETS crnlib)
+install(TARGETS ${CESIUM_NATIVE_DRACO_LIBRARY})
+#install(TARGETS json)
+#install(TARGETS gflags)
+install(TARGETS glog)
+#install(TARGETS mongo-c-driver)
+#install(TARGETS dt-ifcpp)
 
 add_subdirectory(BimModelInput)
 add_subdirectory(PluginIfcpplast)

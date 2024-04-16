@@ -64,12 +64,15 @@ target_include_directories(PluginIfcplusplus PRIVATE
 )
 
 target_link_directories(PluginIfcplusplus PRIVATE
-    ${3rd_dir}/gflags/build/lib
-    ${3rd_dir}/crunch/build/crnlib/
-    ${3rd_dir}/etop_ifcpp/build_debug/Debug
-    #/usr/local/bin/
-    #/usr/lib/x86_64-linux-gnu/
+    #${3rd_dir}/gflags/build/lib
+    #${3rd_dir}/crunch/build/crnlib/
+    #${3rd_dir}/etop_ifcpp/build_debug/Debug
+    
+    /usr/local/bin/
+    /usr/lib/x86_64-linux-gnu/
 )
+
+find_package(OpenMP)
 
 target_link_libraries(PluginIfcplusplus PRIVATE 
     BimModelInput
@@ -78,11 +81,11 @@ target_link_libraries(PluginIfcplusplus PRIVATE
     #libosgUtil.so
     #libosgText.so
     #libOpenThreads.so
-    #freeimage.so
-    #libzmq.so
-    #libcrnlib.so
+    freeimage.so
+    #freeimage
+    crnlib
     glog
     IfcPlusPlus
     gflags
-    #OpenMP::OpenMP_CXX
+    OpenMP::OpenMP_CXX
 )

@@ -30,9 +30,7 @@ PUBLIC_HEADER "BimModelInput.h")
 
 target_link_libraries(BimModelInput 
     PUBLIC
-    #json
-    #OpenSceneGraph
+
     glog
-    #ZeroMQ
     crnlib
 )

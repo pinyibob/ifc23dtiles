@@ -58,30 +58,6 @@ target_link_directories(bim23dtiles PRIVATE
     /usr/local/bin/
 )
 
-# target_link_libraries(bim23dtiles PRIVATE
-#     BimModelInput
-#     TilesStorage
-#     PluginIfcplusplus
-#     #shlwapi.lib
-#     #ws2_32.lib
-#     osgd.lib
-#     #osgdbd.lib
-#     #osgutild.lib
-#     #osgtextd.lib
-#     #OpenThreadsd.lib
-#     #freeimaged.lib
-#     gflags
-#     glog
-#     IfcPlusPlus
-#     vcglib
-#     gdal
-#     draco
-#     freeimage
-    
-#     #Carve
-#     #register_engine.lib
-#     #botand.lib
-# )
 target_link_libraries(bim23dtiles PRIVATE
     BimModelInput
     TilesStorage
@@ -91,12 +67,11 @@ target_link_libraries(bim23dtiles PRIVATE
     libosgUtil.so
     libosgText.so
     libOpenThreads.so
-    
+    libbson-1.0.so
     freeimage.so
+
     glog
     gflags
-
-    libdraco.so
-    libbson-1.0.so
-    libgdal.so
+    draco
+    gdal
 )
