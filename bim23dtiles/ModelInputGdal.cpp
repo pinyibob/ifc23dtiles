@@ -1,3 +1,7 @@
+/*
+	part of modelinput.h aming at deal with codinate convert with gdal lib
+*/
+
 #include "ModelInput.h"
 
 #include "util.h"
@@ -77,8 +81,11 @@ namespace XBSJ {
 		v.z() = z;
 		return true;
 	}
-	bool   ModelInput::configSrs(json & cinput) {
-		//�������ļ���ȡ
+
+	// get pos convert matrix with lib gdal
+	bool ModelInput::configSrs(json& cinput) {
+		// get model positon eg: ENU:22.599869,113.986992
+		// ENU means east north up cordinate, usually refers to WGS84
 		auto csrs = cinput.get<json>()["srs"];
 		if (csrs.is_string()) {
 			srs = csrs.get<string>();
@@ -87,29 +94,30 @@ namespace XBSJ {
 		if (corigin.is_string()) {
 			auto str = corigin.get<string>();
 			if (!parse(str, srsorigin)) {
-				LOG(WARNING) << "origin��������";
+				LOG(WARNING) << "origin miss";
 			}
 		}
 
+		//parse enu or t4326 pos
 		if (srs.find("ENU:") == 0) {
-			//����������γ��
+			//parse data
 			auto idx = srs.find(",");
 			if (idx == string::npos) {
-				LOG(ERROR) << "in_srs�������ô���";
+				LOG(ERROR) << "position parse error";
 				return false;
 			}
 			auto lat = atof(srs.substr(4, idx - 4).c_str());
 			auto lon = atof(srs.substr(idx + 1).c_str());
 			if (isnan(lat) || isnan(lon)) {
-				LOG(ERROR) << "in_srs�������ô���";
+				LOG(ERROR) << "position parse error2";
 				return false;
 			}
 			 
 			enuMatrix = XbsjOsgUtil::eastNorthUpMatrix(lon, lat, 0,0);
-
 			enutrans = true;
 		}
-		else {
+		else 
+		{
 			OGRSpatialReference refs;
 			if (!importFromStr(refs, const_cast<char*>(srs.c_str()))) {
 
@@ -129,8 +137,8 @@ namespace XBSJ {
 
 		return true;
 	}
-	bool   ModelInput::setSrs(string crs ,string coords,string angles) {
-		
+
+	bool ModelInput::setSrs(string crs ,string coords,string angles) {
 
 		OGRSpatialReference refs;
 		if (!importFromStr(refs, const_cast<char*>(crs.c_str()))) {

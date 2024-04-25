@@ -13,12 +13,13 @@ namespace XBSJ {
 	PostProcess::~PostProcess()
 	{
 	}
-	json PostProcess::process(PostTiles &  tiles) {
 
+	json PostProcess::process(PostTiles &  tiles)
+	{
 		json j;
 
 		//计算总范围
-		for (auto & t : tiles) {
+		for (auto& t : tiles) {
 			box.expandBy(t->box);
 		}
 
@@ -32,8 +33,7 @@ namespace XBSJ {
 		//计算enu的逆矩阵
 		globleBoxCenterENUInv = osg::Matrix::inverse(globleBoxCenterENU);
 
-
-		root = make_shared<PostProcessTreeNode>(box,this);
+		root = make_shared<PostProcessTreeNode>(box, this);
 
 		//构造八叉树
 		for (auto &t : tiles) {
@@ -46,9 +46,7 @@ namespace XBSJ {
 		//修正root的transform和box
 		j["transform"] = XbsjOsgUtil::toJson(globleBoxCenterENU);
 
-
 		//更新场景树
-
 		return move(j);
 	}
 

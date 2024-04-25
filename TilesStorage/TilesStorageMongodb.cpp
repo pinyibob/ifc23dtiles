@@ -157,18 +157,13 @@ namespace XBSJ
 			return EXIT_FAILURE;
 		}
 
-
-
 		bson_destroy(&reply);
 		bson_destroy(newModel);
 		mongoc_collection_destroy(modelCollection);
-
-
-		
-
 		 
 		return  true;
 	}
+
 	bool  TilesStorageMongodb::saveJson(string filepath, json & content) {
 
 		auto data = content.dump();
@@ -377,7 +372,6 @@ namespace XBSJ
 		mongoc_bulk_operation_insert(bulk, doc);
 		bson_destroy(doc);
 
-
 		//��������������
 		auto children = node["children"];
 		if (!children.is_array())
@@ -398,12 +392,10 @@ namespace XBSJ
 		bson_t reply;
 		bson_error_t error;
 
-
 		//��������
 		insertDocument(bulk, scenetree, modelID, NULL);
 
 		auto ret = mongoc_bulk_operation_execute(bulk, &reply, &error);
-
 
 		auto str = bson_as_canonical_extended_json(&reply, NULL);
 		{

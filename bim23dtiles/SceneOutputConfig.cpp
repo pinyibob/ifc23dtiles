@@ -132,10 +132,8 @@ namespace XBSJ {
 		return true;
 	}
  
-
 	bool SceneOutputConfig::process(shared_ptr<ModelInput> input, size_t idx) {
 
- 
 		//1, 场景分割
 		shared_ptr<SubSceneSplitor> splitor = make_shared<SubSceneSplitor>();
 		{
@@ -146,11 +144,9 @@ namespace XBSJ {
 			}
 		}
 		
-
 		//2，遍历所有子场景，分别去处理
-
 		//下面这个root仅仅是为了组织多个目录
-		shared_ptr<SceneOutput>  root = make_shared<SceneOutput>(this, nullptr, idx);
+		shared_ptr<SceneOutput> root = make_shared<SceneOutput>(this, nullptr, idx);
 
 		ProgressHelper pprocess("process input", splitor->subscenes.size(), 0.8);
 		int step = 0;
@@ -160,7 +156,7 @@ namespace XBSJ {
 				continue;
 
 			//构造一个子场景输出
-			shared_ptr<SceneOutput>  sceneout = make_shared<SceneOutput>(this, root.get(), step-1);
+			shared_ptr<SceneOutput> sceneout = make_shared<SceneOutput>(this, root.get(), step - 1);
 
 			//处理子场景
 			json sproot;
@@ -178,8 +174,6 @@ namespace XBSJ {
  			//走下进度
 			pprocess.skip(step);
 		}
-		
-
 	 
 		//获得这个input的场景树
 		input->fillSceneTree(sceneTree);
@@ -198,27 +192,24 @@ namespace XBSJ {
 
 			hasFileParams.insert(input->fileName);
 		}
- 
 
 		return true;
 	}
+
 	//后处理
 	bool SceneOutputConfig::postProcess() {
 
 		//1, 后处理
-		PostProcess  pp(this);
+		PostProcess pp(this);
 		json root = pp.process(ptiles);
 		if (root.is_null()) {
 			return false;
 		}
 		osg::BoundingBoxd rootbox = pp.box;
 
-	 
 		//上述的位置已经是全球位置了，无需再设置transform了
 		//root["transform"] = globalMatrix.isIdentity() ? XbsjOsgUtil::tianAnMen() : XbsjOsgUtil::toJson(globalMatrix);
 		root["refine"] = "REPLACE";
-
-	 
 
 		//保存tileset
 		if (!writeTileset("tileset.json", root, fileParams)) {
@@ -247,7 +238,8 @@ namespace XBSJ {
 		return storage->saveJson(file, tileset);
  
 	}
-	json SceneOutputConfig::linkJson(string filename, json & child) {
+	
+	json SceneOutputConfig::linkJson(string filename, json& child) {
 		json fakechild;
 		fakechild["geometricError"] = child["geometricError"];
 		fakechild["refine"] = child["refine"];

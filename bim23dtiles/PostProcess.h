@@ -5,9 +5,7 @@
 
 namespace XBSJ {
 
-	 
 	class SceneOutputConfig;
-
 	class PostProcessTile {
 	public:
 		osg::BoundingBoxd box;
@@ -17,7 +15,6 @@ namespace XBSJ {
 
 
 	class PostProcess;
-
 	class PostProcessTreeNode {
 
 	public:
@@ -27,7 +24,6 @@ namespace XBSJ {
 
 		//从父传递过来的构造包围盒
 		osg::BoundingBoxd boxInit;
-
 
 		//实际的数据范围包围盒
 		osg::BoundingBoxd boxContent;
@@ -39,11 +35,10 @@ namespace XBSJ {
 		//四个子块
 		shared_ptr<PostProcessTreeNode> children[8];
 
-
-		PostTiles  tiles;
+		//data
+		PostTiles tiles;
 
 		void add(shared_ptr<PostProcessTile> & tile);
-
 
 		double tilesize = 0;
 
@@ -53,18 +48,17 @@ namespace XBSJ {
 
 		json  process();
 
-
 		string getPath(string iden);
 	};
+
 	class PostProcess
 	{
-	   
 	public:
 		PostProcess(SceneOutputConfig * cfg);
 		~PostProcess();
 
 	public:
-		json process(PostTiles &  tiles);
+		json process(PostTiles&  tiles);
 	 
 		osg::BoundingBoxd box;
 

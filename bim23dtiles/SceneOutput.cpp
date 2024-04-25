@@ -31,87 +31,72 @@ namespace XBSJ {
 		return packer->globleBox;
 	}
 
-	bool SceneOutput::process(json & content, shared_ptr<SubScene> scene, double gerror) {
+	bool SceneOutput::process(json& content, shared_ptr<SubScene> scene, double gerror) {
 
 		subscene = scene;
-		//����  packer
 		packer = make_shared<SubScenePacker>(scene);
 
-		//�����ʼ�������
+		//set geometricError along with src box size 
 		if (gerror == 0)
 			geometricError = packer->srcBox.radius() * config->boxRadius2GeometricError;
 		else
 			geometricError = gerror;
-		//����lod,ֱ�Ӽ����ϸһ��
+
 		//geometricError = 0;
 
 		return process(content);
 	}
-	bool SceneOutput::process(json & content) {
+
+	bool SceneOutput::process(json& content) {
 
 		auto url = getUrl();
 		ProgressHelper pglobal("process :" + url, 1);
-		//�����Χ��
-		//LOG(INFO) << " box radius:"<<group->getBox().radius();
-		//return false;
-		//1,���ӳ���������о���
+
+		//1, simplify
 		bool simpled = false;
 		{
 			ProgressHelper psimple("simply :" + url, 1, 0.1);
-			simpled = packer->simply(geometricError,config);
+			simpled = packer->simply(geometricError, config);
 		}
  
-		//2, �������
+		//2, save one b3dm file
 		{
 			ProgressHelper psave("save :" + url, 1, 0.1);
 			content = save2b3dm();
 		}
 	 
-		//4,��������ӳ�����û�о��������ô��ֹͣ
 		if (!simpled)
 		{
 			content["geometricError"] = 0;
 			return true;
 		}		
-		//return true;
-		//��һ���������
+
+		// cal next lod data
 		double nextGeometricError = geometricError * config->nextGeometricErrorFactor;
 
-		
-		//����¼���������Ѿ�С���������ôֹͣ
-		// if (nextGeometricError < subscene->maxGeometricError) {
-
-		// 	LOG(WARNING) << "nextGeometricError < subscene->maxGeometricError";
-		// 	content["geometricError"] = 0;
-		// 	return true;
-		// }
-		
-
-		//����Ѿ�С����С����ôֹͣ
+		// function exit condition
 		if (nextGeometricError < config->minGeometricError) {
 			LOG(WARNING) << "nextGeometricError < config->minGeometricError";
 			content["geometricError"] = 0;
 			return true;
 		}
 		 
-		//5�����ӳ����ٽ��пռ�ָ�
+		//5, child lod construct
 		list<shared_ptr<SubScene>> children;
 		if (!splitSubScene(children))
 		{
-			//����޷��ָ� ֱ�ӷŽ�subscene
 			children.push_back(subscene);
 		}
 		else {
 			LOG(INFO) << "splitSubScene:"<<children.size();
 		}
 	
-		//����Ѿ��޷��ָ�
 		list<json> jsonchildren;
 		size_t idx = 0;
 		ProgressHelper psave("children :" + url, children.size(), 0.8);
 
-		for (auto & child : children) {
-			SceneOutput so(config, this,idx);
+		for (auto& child : children) {
+			SceneOutput so(config, this, idx);
 			json j;
 			if (so.process(j, child, nextGeometricError)) {
 				jsonchildren.push_back(j);
@@ -121,7 +106,8 @@ namespace XBSJ {
 		}
 		content["children"] = jsonchildren;
 		int count = PostProcess::childrenCount(content);
-		//����ӽڵ���࣬��ô�Ѵ˽ڵ㱣�棬��������һ�� ����
+
+		//
 		if (count > 100) {
 			auto filename = "lab_a_" + getPath("_");
 			replace(filename, ".b3dm", ".json");
@@ -130,10 +116,6 @@ namespace XBSJ {
 	 
 		return true;
 	}
-
-
-
-	
 
 	bool SceneOutput::save2glb(ostream & stm) {
 
@@ -151,21 +133,19 @@ namespace XBSJ {
 		};
 
 
-		//����gltf
+		//gltf
 		stringstream gltfbufferStream;
 		//json gltfjson;
 		string gltfcontent;
 
 		Scene2Gltf gltf(config);
-
 		if (!gltf.write(packer, gltfbufferStream, gltfcontent)) {
 
 			LOG(ERROR) << "exportGltf failed";
 			return false;
 		}
 
-		//4,����b3dm
-		//8�ֽڶ���
+		//4, construct b3dm
 		//string gltfcontent = gltfjson.dump();
 		while (gltfcontent.size() % 8 != 0) {
 			gltfcontent.push_back(' ');
@@ -177,45 +157,40 @@ namespace XBSJ {
 		header.length = sizeof(Header) + gltfcontent.size() + gltfbuffer.size() + 2 * sizeof(Chunk);
 		header.version = 2;
 
-		//д��header
+		//header
 		stm.write((char*)&header, sizeof(Header));
-		//д��chunk0  gltf json
+		//chunk0  gltf json
 		Chunk chunkjson;
 		chunkjson.chunkLength = gltfcontent.size();
 		chunkjson.chunkType = ChunkJSON;
 		stm.write((char*)&chunkjson, sizeof(Chunk));
-		//д��content
+		//content
 		stm.write((char*)gltfcontent.data(), gltfcontent.size());
 
-		//д��chunk1 gltf buffer
+		//chunk1 gltf buffer
 		Chunk chunkbin;
-
 		chunkbin.chunkLength = gltfbuffer.size();
 		chunkbin.chunkType = ChunkBIN;
 		stm.write((char*)&chunkbin, sizeof(Chunk));
-		//д��body
-		stm.write((char*)gltfbuffer.data(), gltfbuffer.size());
 
+		//body
+		stm.write((char*)gltfbuffer.data(), gltfbuffer.size());
 
 		return  true;
 	}
 	
 	//输出当前场景到b3dm
-	bool SceneOutput::save2b3dm(ostream & stm) {
+	bool SceneOutput::save2b3dm(ostream& stm) {
 
-		//先存入glb
+		//construct glb content
 		stringstream glbstm;
-
 		if (!save2glb(glbstm)) {
 			LOG(ERROR) << "save2glb  failed";
 			return false;
 		}
 
-		//存入b3dm
+		//construct b3dm
 		B3dm b3dm;
-
- 
-		//搜集所有名称
 		if (!packer->elementNames.empty()) {
 			shared_ptr<B3dm::BatchData> bd = make_shared<B3dm::BatchData>();
 			bd->name = "name";
@@ -304,7 +279,6 @@ namespace XBSJ {
 				memcpy(&bd->binData.data[0], &data[0], bd->binData.data.size());
 				b3dm.batchDatas.push_back(bd);
 			}
-
 			else if (param.type == "Text" || param.type == "string") {
 				//添加字符串字段
 				bd->jsonData = op->values;
@@ -373,7 +347,6 @@ namespace XBSJ {
 				b3dm.batchDatas.push_back(bd);
 			}
 
-			
 		}
 		 
 		try {
@@ -402,9 +375,7 @@ namespace XBSJ {
 		if(packer->getDataSize() < config->tileMaxDataSize)
 			return  false;
 
-		
 		return subscene->split(scenes);
- 
 	}
  
 	json SceneOutput::save2b3dm() {
@@ -429,12 +400,12 @@ namespace XBSJ {
 			box.zMin() -= minV;
 			box.zMax() += minV;
 		} 
-		//4,本块的矩阵  b3dm里的坐标 * 此矩阵  = 全球世界坐标
+		
+		//4,本块的矩阵  b3dm里的坐标 * 此矩阵 = 全球世界坐标
 		transform = packer->globleBoxCenterENU;
 		transformInverse = packer->globleBoxCenterENUInv;
-  
 
-		ret["boundingVolume"] = { { "box",XbsjOsgUtil::toJson(box) } };
+		ret["boundingVolume"] = { { "box", XbsjOsgUtil::toJson(box) } };
 
 		//计算transform
 		auto trans = transform;
@@ -471,6 +442,7 @@ namespace XBSJ {
 
 		return move(ret);
 	}
+
 	string SceneOutput::getPath(string iden) {
 		string name = str(index) + ".b3dm";
 		auto p = this->parent;
@@ -480,6 +452,7 @@ namespace XBSJ {
 		}
 		return move(name);
 	}
+
 	string SceneOutput::getOutfile() {
 #if WIN32
 		return getPath("\\");
@@ -487,6 +460,7 @@ namespace XBSJ {
 		return getPath("/");
 #endif
 	}
+
 	string SceneOutput::getUrl() {
 		return getPath("/");
 	}

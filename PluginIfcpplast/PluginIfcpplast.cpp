@@ -579,19 +579,18 @@ namespace XBSJ {
 		}
 	};
 
-	class PluginIfcpplastReader :public ModelInputReader {
+	class PluginIfcpplastReader : public ModelInputReader {
 	public:
-		~PluginIfcpplastReader() {
+		~PluginIfcpplastReader() {}
 
-			//释放
-		}
-		virtual bool init(json & cinput) {
+		bool init(json & cinput) override
+		{
 			return true;
 		}
+
 		//使用参数初始化
-		virtual bool init(json & cinput, json & idsinput) {
-
-
+		bool init(json & cinput, json & idsinput) override
+		{
 			auto ccolorRatio = cinput["colorRatio"];
 			if (ccolorRatio.is_number()) {
 				auto v = ccolorRatio.get<double>();
@@ -621,27 +620,23 @@ namespace XBSJ {
 		}
 
 		//获得需要几次读取
-		virtual int  getNumScene() {
-
+		int getNumScene() override
+		{
 			return 1;
 		}
 
-		//读取第几次
-		virtual shared_ptr<BimScene>  loadScene(int partindex) {
-
+		//part index mean times loadscene, so far it's not clear.
+		shared_ptr<BimScene> loadScene(int partindex) override
+		{ 
 			//1, 构造ifc的读取对象
 			shared_ptr<ReaderSTEP> reader = make_shared<ReaderSTEP>();
 			m_ifc_model = make_shared<BuildingModel>();
 
-			// 1: create an IFC model and a reader for IFC files in STEP format:
-			//shared_ptr<BuildingModel> ifc_model11(new BuildingModel());
 			//2，解析ifc文件
 			shared_ptr<ProgressRepoter> repoter = make_shared<ProgressRepoter>("解析文件", 1, 0.2);
 			reader->setMessageCallBack(repoter.get(), ProgressRepoter::report);
 			reader->loadModelFromFile(inputfile, m_ifc_model);
 			repoter.reset();
-
-
 
 			//3, 创建ifc几何体
 			shared_ptr<LabGeometryConverter> geometry_converter = make_shared<LabGeometryConverter>(m_ifc_model);
@@ -652,7 +647,6 @@ namespace XBSJ {
 			geometry_converter->setMessageCallBack(repoter.get(), ProgressRepoter::report);
 			geometry_converter->convertGeometry(shell_ids);
 			repoter.reset();
-
 
 			//4, 寻找其中可以显示的数据
 			shared_ptr<ProductShapeData> ifc_project_data;

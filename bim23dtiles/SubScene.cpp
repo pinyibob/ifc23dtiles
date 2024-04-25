@@ -106,8 +106,6 @@ namespace  XBSJ
 			osg::BoundingBoxd tb;
 			tb.expandBy(osg::Vec3d(t0.x(), t0.y(), 0)); tb.expandBy(osg::Vec3d(t1.x(), t1.y(), 0)); tb.expandBy(osg::Vec3d(t2.x(), t2.y(), 0));
 
-
-
 			if (tb.xMax() > texture->width || tb.xMin() < 0)
 				uvBetween01 = false;
 			if (tb.yMax() > texture->height || tb.yMin() < 0)
@@ -144,7 +142,6 @@ namespace  XBSJ
 		if(texture && mesh->HasTextureCoords())
 			smesh.geometricDatasize += mesh->vertexes.size() * sizeof(osg::Vec2f);
  
-
 		smesh.geometricDatasize += mesh->indices.size() * sizeof(unsigned short)  ;
 
 		meshes.push_back(smesh);
@@ -153,6 +150,7 @@ namespace  XBSJ
 		LOG_IF(INFO, meshbox.center().x() < -10000) << "bigMesh:" << meshbox.center().x() << element->name;
 		return true;
 	}
+
 	//更新数据总量
 	void SubScene::update() {
 
@@ -185,8 +183,9 @@ namespace  XBSJ
  
 		return ;
 	}
+
 	//按材质分割为两部分
-	bool SubScene::splitWithMaterial(shared_ptr<SubScene> & child0, shared_ptr<SubScene> & child1) {
+	bool SubScene::splitWithMaterial(shared_ptr<SubScene>& child0, shared_ptr<SubScene>& child1) {
 		if (meshes.size() <= 1)
 			return false;
 		if(usedMaterial.size() <= 1)
@@ -243,14 +242,14 @@ namespace  XBSJ
 		}
 		child0->update();
 		child1->update();
-		return true;
 
+		return true;
 	}
+
 	//按空间分割为两部分
 	bool SubScene::splitWithSpace(list<shared_ptr<SubScene>> &children) {
 		if(meshes.size() <= 1)
 			return false;
-
 
 		//这里来一个简单的八叉树分割
 		shared_ptr<SubScene> octree[8];
@@ -287,13 +286,11 @@ namespace  XBSJ
 		}
 
 		return true;
-	 
 	}
 
 	bool SubScene::split(list<shared_ptr<SubScene>> &children) {
 		if (meshes.size() <= 1)
 			return false;
-
 
 		if (input->splitPriority == "material") {
 			shared_ptr<SubScene>  child0;
@@ -328,9 +325,7 @@ namespace  XBSJ
 		return false;
 	}
 
-   
-
-	bool SubSceneSplitor::split(ModelInput * input) {
+	bool SubSceneSplitor::split(ModelInput* input) {
 		if (!input)
 			return false;
 
@@ -435,7 +430,7 @@ namespace  XBSJ
 			return false;
 
 		//本node所有mesh
-		for (auto & mesh : element->meshes) {
+		for (auto& mesh : element->meshes) {
 			 
 			subscene->addMesh(element, mesh.get());
 		}

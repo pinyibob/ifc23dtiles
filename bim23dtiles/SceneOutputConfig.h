@@ -62,15 +62,13 @@ namespace XBSJ {
 		 
 		//几何误差比例
 		double geometricErrorFactor = 1;
-  
- 
+
+		// 输出tile list
 		PostTiles  ptiles;
- 
 		 
 		json   fileParams;
 		std::set<std::string> hasFileParams;
 		
-
 		json sceneTree;
 	};
  

@@ -39,14 +39,11 @@ namespace XBSJ {
 		inputfile = cinputfile.get<string>();
 		inputfile = UTF8_To_string(inputfile);
 
-
-
 		//强制双面
 		auto cforceDoubleSide = cinput["forceDoubleSide"];
 		if (cforceDoubleSide.is_boolean()) {
 			forceDoubleSide = cforceDoubleSide.get<bool>();
 		}
-
 
 		//纹理缩放比率
 		auto ctextureScaleFactor = cinput["textureScaleFactor"];
@@ -56,7 +53,6 @@ namespace XBSJ {
 				textureScaleFactor = v;
 			}
 		}
-
 
 		//纹理缩放比率
 		auto ctextureGeometricErrorFactor = cinput["textureGeometricErrorFactor"];
@@ -72,6 +68,7 @@ namespace XBSJ {
 		if (ccustomShader.is_boolean()) {
 			customShader = ccustomShader.get<bool>();
 		}
+
 		//禁用光照
 		auto cnolight = cinput["nolight"];
 		if (cnolight.is_boolean()) {
@@ -114,7 +111,6 @@ namespace XBSJ {
 			encodeGBK = cencodeGBK.get<bool>();
 		}
 
-
 		//最大数据量
 		auto csplitMaxDataSize = cinput["splitMaxDataSize"];
 		if (csplitMaxDataSize.is_number_unsigned()) {
@@ -133,7 +129,6 @@ namespace XBSJ {
 			}
 		}
 
-
 		//颜色倍率
 		auto ccolorRatio = cinput["colorRatio"];
 		if (ccolorRatio.is_number()) {
@@ -146,24 +141,19 @@ namespace XBSJ {
 		//配置投影参数
 		configSrs(cinput);
 
-		//--- 配置对象自己的变量 enuMatrix
-
-		// 修改自己的 enuMatrix
-		// osg::Matrixd enuMatrix;
-
-		//加载场景
+		//加载场景 with ifcpp; key process.
 		auto taskrepoter = make_shared<ProgressHelper>("载入场景", 1, 0.9);
-
 		scene = reader->loadScene(readerIndex);
-		
 		taskrepoter.reset();
 
 		if (!scene)
 			scene = make_shared<BimScene>();
 
-		for (auto & e : scene->elements) {
+		//bound box calculate
+		for (auto& e : scene->elements) {
 			elementsBox[e->id] = e->caculBox();
 		}
+		//set model position
 		if (scene->mapCoords.size()) {
 			setSrs(scene->crs, scene->mapCoords);
 		}
@@ -171,15 +161,15 @@ namespace XBSJ {
 			setSrs(scene->crs, scene->coords, scene->angles);
 		}
 
-		//载入完成后，修改材质配置---此处应该对mesh中的材质做修改
-		for (auto &m : scene->materials) {
+		// set model whether use custom shader and no light property
+		for (auto& m : scene->materials) {
 			m->customShader = customShader;
 			m->nolight = nolight;
 			if (forceDoubleSide)
 				m->doubleSide = true;
 		}
-
-		for (auto &e : scene->elements) {
+		
+		for (auto& e : scene->elements) {
 			for (auto &mesh : e->meshes) {
 				mesh->material->customShader = customShader;
 				mesh->material->nolight = nolight;
@@ -213,7 +203,6 @@ namespace XBSJ {
 		auto ext = inputfile.substr(inputfile.find_last_of("."));
 		transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
 
-
 		//如果没有插件，那么初始化所有插件
 		if (ModelInputPlugin::plugins.empty()) {
 			InitPlugins();
@@ -227,7 +216,6 @@ namespace XBSJ {
 
 				if (plugin.empty() || plugin == p->name) {
 					reader = p->createReader();
-
 					LOG(INFO) << "find plugin: " << p->name << " to read :" << inputfile;
 					break;
 				}
@@ -240,9 +228,7 @@ namespace XBSJ {
 			LOG(INFO) << "try find plugin to read ,ignore plugin setting,only match extion:" << inputfile;
 			for (auto & p : ModelInputPlugin::plugins) {
 				if (p->supportFormat(ext)) {
-
 					reader = p->createReader();
-
 					LOG(INFO) << "find plugin: " << p->name << " to read :" << inputfile;
 					break;
 
@@ -276,9 +262,7 @@ namespace XBSJ {
 			inputs.push_back(input);
 		}
 
-
 		return true;
-
 	}
 
 	string ModelInput::ExeFolder = "";

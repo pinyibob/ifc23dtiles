@@ -16,11 +16,9 @@ namespace XBSJ {
 	public:
 		SceneOutput(SceneOutputConfig *config, SceneOutput *parent,size_t idx);
 		~SceneOutput();
-	
 
 		bool process(json & content, shared_ptr<SubScene> scene, double geometricError = 0);
 
-		
 		//当前输出的子场景
 		shared_ptr<SubScene> subscene;
 		//当前块的子场景分组
@@ -31,12 +29,11 @@ namespace XBSJ {
 	protected:
 		bool process(json & content);
 
-		SceneOutputConfig * config = nullptr;
+		SceneOutputConfig* config = nullptr;
 
 		//当前块的几何误差
 		double geometricError = 0;
 	
-
 		//获取url
 		string getPath(string iden);
 		string getOutfile();
@@ -50,18 +47,13 @@ namespace XBSJ {
 		osg::Matrix  transform = osg::Matrix::identity();
 		osg::Matrix  transformInverse = osg::Matrix::identity();
 
-
-
 		//输出b3dm
 		bool save2glb(ostream & stm);
 		bool save2b3dm(ostream & stm);
 		json save2b3dm();
-		
 
 		bool splitSubScene(list<shared_ptr<SubScene>>&scenes);
 
-
-		
 	};
 }
 

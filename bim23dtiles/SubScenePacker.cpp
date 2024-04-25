@@ -172,9 +172,7 @@ namespace XBSJ {
 
 	bool SubScenePacker::simply(double geometric, SceneOutputConfig * config) {
 
-
 		//1， 获取所有包围盒
-
 		auto center = srcBox.center();
 
 		LOG(INFO) << "box center:" << center.x() << "," << center.y() << "," << center.z() << " radius:" << srcBox.radius();
@@ -185,13 +183,10 @@ namespace XBSJ {
 		//计算enu的逆矩阵
 		globleBoxCenterENUInv = osg::Matrix::inverse(globleBoxCenterENU);
 
-
-
 		//2,遍历子场景拷贝原始三角网，做大小筛选、纹理缩放比率计算
 		simpled = copySrc(subscene, geometric, config);
 		if (!simpled || simpled->meshs.empty())
 			return true;
-
 
 		///3, 如果打包前精简
 		if (input->simplifyMesh == "before") {
@@ -204,7 +199,6 @@ namespace XBSJ {
 		materialPack();
 		//5,对mesh打包
 		meshPack();
-
 		//6, 如果在打包前没有精简，那么这里精简
 		if (input->simplifyMesh == "after") {
 			for (auto & m : packedMeshs) {
@@ -230,7 +224,6 @@ namespace XBSJ {
 			}
 		}
 		//8, 然后重新调整精简后的mesh材质引用 
-
 		//一个原始序号到最终删减后序号映射
 		map<unsigned int, unsigned int> afterDelete;
 		unsigned int idx = 0;
@@ -245,7 +238,6 @@ namespace XBSJ {
 				afterDelete[idx] = afterDelete.size();
 			}
 		}
-
 		//9, 重新调整 mesh中的材质引用
 		for (auto p : packedMeshs) {
 			auto smat = p->packedMaterial;
