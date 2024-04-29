@@ -91,8 +91,8 @@ namespace XBSJ {
 		list<shared_ptr<ModelTexture>> textureCaches;
 
 		//void  sceneSpheres(SceneOutputConfig * config, list<json> & nodespheres);
-		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json & config);
-		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json & config, json & ids);
+		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json& config);
+		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json& config, const std::vector<std::uint32_t>& ids);
 		static string ExeFolder;
 
 		void fillSceneTree(json & j);

@@ -213,7 +213,6 @@ namespace XBSJ {
 
 	shared_ptr<ModelTexture>  BimScene::getTexture(shared_ptr<ModelTexture> & texture) {
 
-
 		for (auto & t : textures) {
 			if (t->equals(texture)) {
 				return t;
@@ -226,8 +225,6 @@ namespace XBSJ {
 		return texture;
 
 	}
-
-
 
 	osg::BoundingBoxd  ModelMesh::caculBox() {
 
@@ -258,8 +255,6 @@ namespace XBSJ {
 
 	}
 
-
-
 	int BimScene::getParamIndex(string name, string type) {
 
 		int index = -1;
@@ -278,5 +273,5 @@ namespace XBSJ {
 	}
 
 
-	list<shared_ptr<ModelInputPlugin>>  ModelInputPlugin::plugins;
+	list<shared_ptr<ModelInputPlugin>> ModelInputPlugin::plugins;
 }

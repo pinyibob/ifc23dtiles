@@ -583,11 +583,35 @@ namespace XBSJ {
 	public:
 		~PluginIfcpplastReader() {}
 
-		bool init(json & cinput) override
+		bool init(json& cinput) override
 		{
 			return true;
 		}
 
+		bool init(json& cinput, const std::vector<std::uint32_t>& ids) override
+		{
+			auto ccolorRatio = cinput["colorRatio"];
+			if (ccolorRatio.is_number()) {
+				auto v = ccolorRatio.get<double>();
+				if (v > 0 && v < 10) {
+					colorRatio = v;
+				}
+			}
+
+			//从中提取输入文件信息
+			auto cinputfile = cinput["file"];
+			if (!cinputfile.is_string()) {
+				LOG(ERROR) << "input.file config failed";
+				return false;
+			}
+			inputfile = cinputfile.get<string>();
+			inputfile = UTF8_To_string(inputfile);
+
+			shell_ids.assign(ids.begin(), ids.end());
+			return true;
+		}
+
+#if 0
 		//使用参数初始化
 		bool init(json & cinput, json & idsinput) override
 		{
@@ -614,10 +638,9 @@ namespace XBSJ {
 					shell_ids.push_back(idsinput[i].get<int>());
 				}
 			}
-
-
 			return true;
 		}
+#endif
 
 		//获得需要几次读取
 		int getNumScene() override

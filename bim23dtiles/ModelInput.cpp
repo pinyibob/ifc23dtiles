@@ -183,7 +183,7 @@ namespace XBSJ {
 		return true;
 	}
 
-	bool ModelInput::GenInputs(list<shared_ptr<ModelInput>> & inputs, json & cinput,json & idsinput)
+	bool ModelInput::GenInputs(list<shared_ptr<ModelInput>> & inputs, json& cinput, const std::vector<std::uint32_t>& ids)
 	 {
 		//插件
 		string plugin = "";
@@ -244,7 +244,7 @@ namespace XBSJ {
 		cinput["exefolder"] = string_To_UTF8(ExeFolder);
 
 		//2, 初始化
-		if (!reader->init(cinput,idsinput)) {
+		if (!reader->init(cinput, ids)) {
 			LOG(ERROR) << "reader init failed" << inputfile;
 			return false;
 		}

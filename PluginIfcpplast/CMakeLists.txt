@@ -76,13 +76,16 @@ find_package(OpenMP)
 
 target_link_libraries(PluginIfcplusplus PRIVATE 
     BimModelInput
+    
     #libosg.so
     #libosgDB.so
     #libosgUtil.so
     #libosgText.so
     #libOpenThreads.so
+
     freeimage.so
     #freeimage
+
     crnlib
     glog
     IfcPlusPlus

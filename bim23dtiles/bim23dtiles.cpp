@@ -27,6 +27,7 @@ DEFINE_string(shellids, "", "???ids");
 #include "util.h" 
 #include "ModelInput.h"
 #include "SceneOutputConfig.h"
+#include "get_shell.h"
 
 using namespace XBSJ;
 
@@ -92,25 +93,25 @@ int main(int argc, char * argv[])
 	}
 
 	//bim shell ids
-	json idsConfig;
-	if (!FLAGS_shellids.empty()) {
-		ifstream infile(FLAGS_shellids, ios::in);
-		if (!infile) {
-			errorOut("id file open error");
-			return 0;
-		}
-		try
-		{
-			infile >> idsConfig;
-		}
-		catch (const std::exception&)
-		{
-			infile.close();
-			errorOut("???ID??????????");
-			return 0;
-		}
-		infile.close();
-	}
+	// json idsConfig;
+	// if (!FLAGS_shellids.empty()) {
+	// 	ifstream infile(FLAGS_shellids, ios::in);
+	// 	if (!infile) {
+	// 		errorOut("id file open error");
+	// 		return 0;
+	// 	}
+	// 	try
+	// 	{
+	// 		infile >> idsConfig;
+	// 	}
+	// 	catch (const std::exception&)
+	// 	{
+	// 		infile.close();
+	// 		errorOut("???ID??????????");
+	// 		return 0;
+	// 	}
+	// 	infile.close();
+	// }
 
 	//whether delete task input json
 	auto cdelete = taskConfig["delete"];
@@ -187,6 +188,19 @@ int main(int argc, char * argv[])
 	clock_t startTime, endTime;
 	startTime = clock();
 
+	//get shells
+	//std::vector<unsigned int>shells;
+	{
+		auto ifile = cinputs.at(0)["file"];
+		if(ifile.is_string()) {
+			auto filename = ifile.get<string>();
+			shell_id_collector ic;
+			ic.execute(filename.c_str());
+		}
+	}
+	if(select_ids.empty())
+		errorOut("shell get failed");
+
 	//output task
 	shared_ptr<SceneOutputConfig> output = make_shared<SceneOutputConfig>();
 	if (!output->config(taskConfig)) {
@@ -200,7 +214,7 @@ int main(int argc, char * argv[])
 		list<shared_ptr<ModelInput>> inputs;
 		for (size_t i = 0; i < cinputs.size(); i++)
 		{
-			if (!ModelInput::GenInputs(inputs, cinputs[i],idsConfig)) {
+			if (!ModelInput::GenInputs(inputs, cinputs[i], select_ids)) {
 				LOG(WARNING) << "gen inputs failed:"<<i;
 			}
 		}
