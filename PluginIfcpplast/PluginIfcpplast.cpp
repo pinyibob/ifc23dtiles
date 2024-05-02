@@ -435,14 +435,13 @@ namespace XBSJ {
 		shared_ptr<BimElement> labele = make_shared <BimElement>();
 		double eps = 1.5e-8;// m_epsCoplanarDistance;
 		//材质 
-		auto defaultMaterial = toMaterial(product_shape->getAppearances(),scene);
+		auto defaultMaterial = toMaterial(product_shape->getAppearances(), scene);
 		if (!defaultMaterial)
 			defaultMaterial = make_shared<ModelMaterial>();
 
 		defaultMaterial = scene->getMaterial(defaultMaterial);
 		//偏移矩阵
 		auto trans = convertMatrixToOSG(product_shape->getTransform());
-
 
 		//遍历所有 Representation
 		std::vector<shared_ptr<RepresentationData> >& vec_product_representations = product_shape->m_vec_representations;
@@ -588,7 +587,7 @@ namespace XBSJ {
 			return true;
 		}
 
-		bool init(json& cinput, const std::vector<std::uint32_t>& ids) override
+		bool init(json& cinput, const std::set<std::uint32_t>& ids) override
 		{
 			auto ccolorRatio = cinput["colorRatio"];
 			if (ccolorRatio.is_number()) {
@@ -607,7 +606,7 @@ namespace XBSJ {
 			inputfile = cinputfile.get<string>();
 			inputfile = UTF8_To_string(inputfile);
 
-			shell_ids.assign(ids.begin(), ids.end());
+			shell_ids.insert(ids.begin(), ids.end());
 			return true;
 		}
 
@@ -635,7 +634,7 @@ namespace XBSJ {
 			//std::vector<std::int16_t> select_ids;
 			if (!idsinput.empty()) {
 				for (size_t i = 0; i < idsinput.size(); i++) {
-					shell_ids.push_back(idsinput[i].get<int>());
+					shell_ids.insert(idsinput[i].get<int>());
 				}
 			}
 			return true;
@@ -743,7 +742,7 @@ namespace XBSJ {
 				auto element = loadIfcElement(scene, product_shape, m_geom_settings);
 
 				if (element) {
-
+					element->_bShell = shell_ids.count(ifc_product->m_tag) == 1;
 					scene->elements.push_back(element);
 
 					//解析属性
@@ -809,7 +808,7 @@ namespace XBSJ {
 		std::set<int> visited;
 		std::set<int> hasGeometry;
 		std::map<int, std::string> sid2id;
-		std::vector<uint32_t> shell_ids;
+		std::set<uint32_t> shell_ids;
 
 	};
 

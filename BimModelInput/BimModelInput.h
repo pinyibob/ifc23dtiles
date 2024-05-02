@@ -6,6 +6,7 @@
 #include <osg/Matrixd>
 #include <osg/BoundingBox>
 #include <nlohmann/json.hpp>
+#include <set>
 using namespace nlohmann; 
 
 namespace XBSJ
@@ -162,24 +163,21 @@ namespace XBSJ
 		BimElement() {}
 
 	public:
-
-		//?1?7?0?1?1?1?1?7
 		//list<std::shared_ptr<BimElement>> children;
 
-		//?1?7?1?7?1?7?1?7?1?7?1?7?1?7��?1?7
 		list<std::shared_ptr<ModelMesh>> meshes;
 
-		//bim ?1?7?1?7?1?7?1?7
+		//bim element property
 		list<BimPropety> propertes;
 
-		//?1?7?5?5?1?7?1?7?1?7?1?7
 		vector<ConstructPropety> constructProps;
 
 		string  name = "";
 
+		bool _bShell = false;
+
 		//bim element id
 		string  id = "";
-		//?1?7?1?7?1?7id?1?7?1?7?1?7?1?7?1?7?1?7?1?7?0?9?0?3bim ?1?7?1?7?1?7?1?7?1?7?1?7?1?7 ?1?7?1?7?1?7?1?7id
 		int     sid = 0;
 
 		osg::BoundingBoxd caculBox();
@@ -191,16 +189,16 @@ namespace XBSJ
 	public:
 		BimScene() {}
 
+		std::shared_ptr<BimScene> copy() const;
+
 		list<std::shared_ptr<BimElement>> elements;
 		//pbr param
-		list< std::shared_ptr<ModelMaterial>> materials;
+		list<std::shared_ptr<ModelMaterial>> materials;
 		//uv texture
-		list <std::shared_ptr<ModelTexture>> textures;
+		list<std::shared_ptr<ModelTexture>> textures;
 
-		//?1?7?1?7?1?7?1?7
 		vector<BimParam> params;
 
-		//?1?7?5?5?1?7?1?7?1?7?1?7
 		vector<ConstructParam> constructParams;
 
 		std::shared_ptr<ModelMaterial> getMaterial(std::shared_ptr<ModelMaterial> & material);
@@ -208,23 +206,21 @@ namespace XBSJ
 
 		int getParamIndex(string name, string type = "string");
 
-		//?0?4?0?8?1?7?1?7?1?7?1?7
 		string crs = "";
 		
 		//la lon height rotation
 		vector<double> mapCoords;
 
-		//?1?7?1?7?1?7?1?7?1?7?1?7?1?7?1?7
 		string coords = "";
 
-		//?1?7?0?8?1?7
 		string angles = "";
+
 	};
 
 	class BIMMODELINPUT_API ModelInputReader {
 	public:
 		virtual bool init(json & param) = 0;
-		virtual bool init(json & param, const std::vector<std::uint32_t>& ids) = 0;
+		virtual bool init(json & param, const std::set<std::uint32_t>& ids) = 0;
 
 		virtual int  getNumScene() = 0;
 
@@ -254,7 +250,6 @@ namespace XBSJ
 		~ProgressHelper();
 
 		void skip(double step);
-
 
 		static void init(string taskserver, string taskname);
 		static void finish();

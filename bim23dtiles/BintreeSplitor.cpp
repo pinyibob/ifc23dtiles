@@ -34,6 +34,7 @@ namespace XBSJ {
 	bool BintreeSplitor::split(list<SplitScalar> &input, list<SplitScalar> &c0, list<SplitScalar> &c1) {
 		if (input.size() < 2)
 			return false;
+
 		if (input.size() == 2)
 		{
 			c0.push_back(*input.begin());
@@ -41,13 +42,12 @@ namespace XBSJ {
 			return true;
 		}
 
-		//Õâ¸öÅÅÐò»¹ÊÇÓÐÒâÒåµÄ£¬·ñÔò·Ý¿é½á¹û½«ÊÜÏÞÓÚÊäÈëË³Ðò
 		input.sort(compSplitScalar);
 		double sum0 = 0;
 		double sum1 = 0;
 		for (auto s : input) {
 			double v = s.value;
-			//±£Ö¤sum0 sum1µÄ¾ø¶ÔÖµ²î¸üÐ¡
+
 			if (fabs(v + sum0 - sum1) < fabs(v + sum1 - sum0)) {
 				c0.push_back(s);
 				sum0 += v;
@@ -70,7 +70,7 @@ namespace XBSJ {
 			return true;
 		}
 
-		//¿Õ¼ä·Ö¸î ÀíÂÛÉÏÓ¦¸ÃÔÚx£¬y£¬zÈý¸öÖáÉÏÑ°ÕÒ×î¼Ñ·Ö¸î£¬±£Ö¤¶þ·ÖÊý¾ÝÁ¿²îÖµ×îÐ¡
+		//ï¿½Õ¼ï¿½Ö¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½yï¿½ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ï¿½ï¿½ï¿½Ñ·Ö¸î£¬ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ð¡
 		list<SplitVector> x0, x1;
 		list<SplitVector> y0, y1;
 		list<SplitVector> z0, z1;
@@ -80,21 +80,21 @@ namespace XBSJ {
 		split(input, 1, y0, y1, ybias);
 		split(input, 2, z0, z1, zbias);
 
-		//ÈýÕß¶¼·Ö¸îÊ§°Ü£¬ÄÇÃ´·µ»Øfalse
+		//ï¿½ï¿½ï¿½ß¶ï¿½ï¿½Ö¸ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½false
 		if (xbias == FLT_MAX && ybias == FLT_MAX && zbias == FLT_MAX)
 			return false;
 
-		//xÊý¾ÝÁ¿Æ«ÒÆ×îÐ¡
+		//xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½Ð¡
 		if (xbias <= ybias && xbias <= zbias) {
 			c0 = move(x0); c1 = move(x1);
 			return true;
 		}
-		//yÊý¾ÝÁ¿Æ«ÒÆ×îÐ¡
+		//yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½Ð¡
 		if (ybias <= xbias && ybias <= zbias) {
 			c0 = move(y0); c1 = move(y1);
 			return true;
 		}
-		//·µ»Øz·Ö¸î
+		//ï¿½ï¿½ï¿½ï¿½zï¿½Ö¸ï¿½
 		c0 = move(z0); c1 = move(z1);
 		return true;
 	}
@@ -104,7 +104,7 @@ namespace XBSJ {
 
 		bias = FLT_MAX;
 
-		//¹¹ÔìÅÅÐò
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		list<SplitSort> sorts;
 		for (auto s : input) {
 			SplitSort ss;
@@ -121,7 +121,7 @@ namespace XBSJ {
 		}
 		sorts.sort(compSplitSort);
 
-		//ÔÚlistÖÐÑ°ÕÒÒ»¸öºÏÊÊµÄ·Ö½çÖµ£¬±£Ö¤×óÓÒÁ½²àµÄÎó²î×îÐ¡
+		//ï¿½ï¿½listï¿½ï¿½Ñ°ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ÊµÄ·Ö½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
 		
 		int minIdx = -1;
 
@@ -137,7 +137,7 @@ namespace XBSJ {
 		if (minIdx < 0)
 			return false;
 
-		//´ÓÕâ¸öÎ»ÖÃ¶ÔÊý¾Ý½øÐÐ·Ö¸î
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½Ð·Ö¸ï¿½
 		int i = -1;
 		for (auto s: sorts) {
 			i++;

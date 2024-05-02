@@ -197,8 +197,8 @@ namespace XBSJ {
 
 		return true;
 	}
+	
 	bool   ModelInput::setSrs(string crs, vector<double> mapCoords) {
-
 
 		OGRSpatialReference refs;
 		if (!importFromStr(refs, const_cast<char*>(crs.c_str()))) {
@@ -233,6 +233,7 @@ namespace XBSJ {
 		double ya = mapCoords[4];
 		
 		double angle = atan2(ya, xa);
+
 #ifndef WIN32
 		trans->Transform(1, &y, &x, 0);
 #else
@@ -245,6 +246,7 @@ namespace XBSJ {
 
 		return true;
 	}
+
 	osg::Vec3d  ModelInput::toGloble(osg::Vec3d v) {
 		// ��Ϊassimp Ĭ����y���ϣ����������ȶ�v�� y �� z ����
 		auto t = v.y();

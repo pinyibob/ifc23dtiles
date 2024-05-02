@@ -170,7 +170,7 @@ namespace XBSJ {
 		}
 		
 		for (auto& e : scene->elements) {
-			for (auto &mesh : e->meshes) {
+			for (auto& mesh : e->meshes) {
 				mesh->material->customShader = customShader;
 				mesh->material->nolight = nolight;
 				if (forceDoubleSide) {
@@ -183,7 +183,7 @@ namespace XBSJ {
 		return true;
 	}
 
-	bool ModelInput::GenInputs(list<shared_ptr<ModelInput>> & inputs, json& cinput, const std::vector<std::uint32_t>& ids)
+	bool ModelInput::GenInputs(list<shared_ptr<ModelInput>>& inputs, json& cinput, const std::set<std::uint32_t>& ids)
 	 {
 		//插件
 		string plugin = "";

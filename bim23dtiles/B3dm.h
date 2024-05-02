@@ -46,6 +46,7 @@ public:
 		string type;//["SCALAR", "VEC2", "VEC3", "VEC4"]
 		string data;//实际二进制数据
 	};
+	
 	//两种可能，要么是个json数组，要么是个二进制数组
 	struct BatchData {
 		string name;

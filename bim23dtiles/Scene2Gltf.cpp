@@ -32,26 +32,21 @@ namespace XBSJ {
 			 gltfbufferStream(stm),config(cfg) {
  
 		}
+
 	public:
-
-	 
-
 		json process() {
 
 			tinygltf::Buffer buffer0;
  
-			//1,????????mesh  ??????darco?????
-			//?????????????
 			for (auto &p : group->packedMeshs) {
 				if(!p->hasTexcoord())
 					processMesh(p,buffer0);
 			}
-			//?????????????
+
 			for (auto &p : group->packedMeshs) {
 				if (p->hasTexcoord())
 					processMesh(p, buffer0);
 			}
-
 			
 			gltfmodel.buffers.push_back(buffer0);
 			//???mesh
@@ -87,14 +82,13 @@ namespace XBSJ {
 					LOG(WARNING) << "updateImageData failed";
 					continue;
 				}
-				//????gltfimage
+				//gltfimage
 				tinygltf::Image timage;
 				timage.mimeType = tex->imageType;
 
 				timage.image.resize(tex->imageData.size());
 				memcpy(&timage.image[0], tex->imageData.data(), tex->imageData.size());
  
-				 
 				gltfmodel.images.push_back(timage);
  
 				//????sampler
@@ -124,7 +118,7 @@ namespace XBSJ {
 				 
 				//https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md
  
-				//?????§Ø????????????????????????
+				//?????ï¿½ï¿½????????????????????????
 				if (mat->diffuse.r == 0 && mat->diffuse.g == 0 && mat->diffuse.b == 0) {
 					mat->diffuse.r = 1.0;
 					mat->diffuse.g = 1.0;
@@ -183,9 +177,7 @@ namespace XBSJ {
 				
 			}
 
-			//??????????????????
-			auto &  afterDraco = gltfmodel.buffers[0];
-
+			auto& afterDraco = gltfmodel.buffers[0];
 			for (auto &img : gltfmodel.images) {
 
 				writeBuffer(afterDraco,&img.image[0], img.image.size());
@@ -204,7 +196,6 @@ namespace XBSJ {
 			}
  
 			//??????? 
-		
 			gltfmodel.asset.generator = "cesiumlab";
 			gltfmodel.asset.version = "2.0";
 
@@ -243,7 +234,6 @@ namespace XBSJ {
 			//????????
  
 			unsigned int vcount = mesh->position.size();
-
 			
 			{
 				writeBuffer(buffer,&mesh->position[0], vcount * sizeof(osg::Vec3f));
@@ -354,7 +344,7 @@ namespace XBSJ {
 
 				primit.indices = gltfmodel.accessors.size() - 1;
 			}
-			//???¨°???
+			//???ï¿½ï¿½???
 			primit.material = mesh->packedMaterial;
 			primit.mode = TINYGLTF_MODE_TRIANGLES;
 
@@ -367,7 +357,7 @@ namespace XBSJ {
 		}
 
 
-		//§Õ?????buffer
+		//ï¿½ï¿½?????buffer
 		void writeBuffer(tinygltf::Buffer & buffer0, const void * data, size_t writesize, int target = TINYGLTF_TARGET_ARRAY_BUFFER) {
 			 
 			tinygltf::BufferView view;
@@ -395,19 +385,14 @@ namespace XBSJ {
 		SceneOutputConfig * config = nullptr;
 	};
 	 
-	bool Scene2Gltf::write( shared_ptr<SubScenePacker> group, stringstream & buffer, string & content) {
+	bool Scene2Gltf::write( shared_ptr<SubScenePacker> group, stringstream& buffer, string & content) {
 
-		 Scene2GltfInner  exportor(group.get(), buffer,config);
+		 Scene2GltfInner exportor(group.get(), buffer, config);
 
 		 auto jcont = exportor.process();
-
 		 content = jcont.dump();
-
 
 		return true;
 	}
-
-	 
-
 	 
 }

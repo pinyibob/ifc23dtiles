@@ -62,9 +62,11 @@ namespace XBSJ {
 		//2, save one b3dm file
 		{
 			ProgressHelper psave("save :" + url, 1, 0.1);
+			// return current b3dm json
 			content = save2b3dm();
 		}
 	 
+		// function exit condition
 		if (!simpled)
 		{
 			content["geometricError"] = 0;
@@ -104,10 +106,11 @@ namespace XBSJ {
 			idx++;
 			psave.skip(idx);
 		}
+		
 		content["children"] = jsonchildren;
 		int count = PostProcess::childrenCount(content);
 
-		//
+		// set divide for a lot child
 		if (count > 100) {
 			auto filename = "lab_a_" + getPath("_");
 			replace(filename, ".b3dm", ".json");
@@ -117,11 +120,11 @@ namespace XBSJ {
 		return true;
 	}
 
-	bool SceneOutput::save2glb(ostream & stm) {
+	bool SceneOutput::save2glb(ostream& stm) {
 
 		struct Header {
 			char magic[4] = { 'g','l','T','F' };
-			uint32_t version = 1; //��ʾ�汾1
+			uint32_t version = 1;
 			uint32_t length = 0;
 		};
 		const uint32_t ChunkJSON = 0x4E4F534A;
@@ -131,7 +134,6 @@ namespace XBSJ {
 			uint32_t chunkLength = 0;
 			uint32_t chunkType = 0;
 		};
-
 
 		//gltf
 		stringstream gltfbufferStream;
@@ -228,6 +230,7 @@ namespace XBSJ {
 			b3dm.batchDatas.push_back(bd);
 			//b3dm.BATCH_LENGTH = packer->fileNames.size();
 		}
+
 		//其他属性
 		for (auto & op : packer->elementProps) {
 			shared_ptr<B3dm::BatchData> bd = make_shared<B3dm::BatchData>();
@@ -351,6 +354,7 @@ namespace XBSJ {
 		 
 		try {
 			auto istr = glbstm.str();
+			// generate b3dm file
 			if (!b3dm.save(stm, istr)) {
 
 				LOG(ERROR) << "b3dm.save  failed";
@@ -366,14 +370,14 @@ namespace XBSJ {
 	}
 
 	//对子场景再次进行分割
-	bool SceneOutput::splitSubScene(list<shared_ptr<SubScene>>&scenes) {
+	bool SceneOutput::splitSubScene(list<shared_ptr<SubScene>>& scenes) {
 		
 		if (!subscene->canSplit())
 			return false;
 
 		// 处理后的数据量很小，那么没必要分割了
 		if(packer->getDataSize() < config->tileMaxDataSize)
-			return  false;
+			return false;
 
 		return subscene->split(scenes);
 	}
@@ -423,6 +427,7 @@ namespace XBSJ {
 			LOG(WARNING) << "scene group empty";
 			return move(ret);
 		}
+
 		string file = getOutfile();
 		//存储数据
 		stringstream buffer;
@@ -432,13 +437,14 @@ namespace XBSJ {
 			return move(ret);
 		}
 
+		// ostream content write file
 		auto istr = buffer.str();
 		if (config->storage->saveFile(file, istr))
 		{
 			LOG(INFO) << "saved :" << file << " geometricError:" << geometricError;
 		}
  
-		ret["content"] = { { "url",getUrl() } };
+		ret["content"] = { { "url", getUrl() } };
 
 		return move(ret);
 	}

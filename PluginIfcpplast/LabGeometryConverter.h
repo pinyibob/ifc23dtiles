@@ -638,7 +638,7 @@ public:
 
 	/*\brief method convertGeometry: Creates geometry for Carve from previously loaded BuildingModel model.
 	**/
-	void convertGeometry(std::vector<uint32_t>& shell_ids)
+	void convertGeometry(std::set<uint32_t>& shell_ids)
 	{
 		progressTextCallback("Creating geometry...");
 		progressValueCallback(0, "geometry");
@@ -671,12 +671,12 @@ public:
 			for (auto it = map_entities.begin(); it != map_entities.end(); ++it)
 			{
 				//没有传入则该结构为空，则略过该步骤
-				if(!shell_ids.empty())
-				{
-					int nCount = std::count(shell_ids.begin(), shell_ids.end(), it->first);
-					if (nCount < 1)
-						continue;
-				}
+				// if(!shell_ids.empty())
+				// {
+				// 	int nCount = std::count(shell_ids.begin(), shell_ids.end(), it->first);
+				// 	if (nCount < 1)
+				// 		continue;
+				// }
 
 				if(it->second->classID() == IFCSPACE)
 				{

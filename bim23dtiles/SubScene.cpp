@@ -188,13 +188,14 @@ namespace  XBSJ
 	bool SubScene::splitWithMaterial(shared_ptr<SubScene>& child0, shared_ptr<SubScene>& child1) {
 		if (meshes.size() <= 1)
 			return false;
-		if(usedMaterial.size() <= 1)
+
+		if (usedMaterial.size() <= 1)
 			return false;
 
 		//构造分类数据
 		list<SplitScalar> splitors;
-		for (auto  m : usedMaterial) {
-			
+		for (auto m : usedMaterial)
+		{
 			SplitScalar ss;
 			ss.ref = m;
 			ss.value = 0;
@@ -204,18 +205,19 @@ namespace  XBSJ
 				ss.value += m->diffuseTexture->datasize;
 
 			//引用该材质的所有mesh的几何数据量
-			for (auto & mesh : meshes) {
+			for (auto& mesh : meshes) {
 				if (mesh.material == m)
 					ss.value += mesh.geometricDatasize;
 			}
 			splitors.push_back(ss);
 		}
+
 		//分割器分割， 如果失败
 		list<SplitScalar> s0, s1;
 		BintreeSplitor bs;
 		if (!bs.split(splitors, s0, s1)) {
 
-			LOG(ERROR) << "BintreeSplitor datasize   failed";
+			LOG(ERROR) << "BintreeSplitor datasize failed";
 			return false;
 		}
 
@@ -223,7 +225,7 @@ namespace  XBSJ
 		child0 = make_shared<SubScene>(input);
 		child1 = make_shared<SubScene>(input);
 		for (auto s : s0) {
-			ModelMaterial * mat = (ModelMaterial *)s.ref;
+			ModelMaterial* mat = (ModelMaterial*)s.ref;
 			for (auto & mesh : meshes) {
 				if (mesh.material == mat)
 				{
@@ -231,6 +233,7 @@ namespace  XBSJ
 				}
 			}
 		}
+
 		for (auto s : s1) {
 			ModelMaterial * mat = (ModelMaterial *)s.ref;
 			for (auto & mesh : meshes) {
@@ -240,6 +243,7 @@ namespace  XBSJ
 				}
 			}
 		}
+
 		child0->update();
 		child1->update();
 
@@ -247,7 +251,7 @@ namespace  XBSJ
 	}
 
 	//按空间分割为两部分
-	bool SubScene::splitWithSpace(list<shared_ptr<SubScene>> &children) {
+	bool SubScene::splitWithSpace(list<shared_ptr<SubScene>>& children) {
 		if(meshes.size() <= 1)
 			return false;
 
@@ -325,7 +329,7 @@ namespace  XBSJ
 		return false;
 	}
 
-	bool SubSceneSplitor::split(ModelInput* input) {
+	bool SubSceneSplitor::split(ModelInput* input, std::shared_ptr<BimScene> ic) {
 		if (!input)
 			return false;
 
@@ -386,6 +390,7 @@ namespace  XBSJ
 			//满足大小阈值 跳过
 			if (s->dataSize <= input->splitMaxDataSize)
 				continue;
+				
 			//如果可以分割，那么返回false
 			if (s->canSplit())
 				return false;
@@ -410,7 +415,6 @@ namespace  XBSJ
 
 	}
 	
-
 	void SubSceneSplitor::meshSubSceneWithChildren(BimElement * element, shared_ptr<SubScene> &subscene) {
 		if (!element)
 			return;
@@ -442,7 +446,6 @@ namespace  XBSJ
 	bool compSubScene(shared_ptr<SubScene> & t1, shared_ptr<SubScene> &  t2) {
 		return  t1->dataSize > t2->dataSize;
 	}
-
 	 
 	void SubSceneSplitor::treesplit(shared_ptr<SubScene> scene) {
 

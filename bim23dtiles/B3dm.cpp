@@ -27,7 +27,7 @@ int getEleSize(string & componentType, string & type) {
 	else if (componentType == "DOUBLE")
 		csize = 4;
 	else
-		LOG(ERROR) << "²»Ö§³ÖµÄcomponentType:" << componentType;
+		LOG(ERROR) << "ï¿½ï¿½Ö§ï¿½Öµï¿½componentType:" << componentType;
 
 	int tsize = 1;
 	if (type == "SCALAR")
@@ -39,7 +39,7 @@ int getEleSize(string & componentType, string & type) {
 	else if (type == "VEC4")
 		tsize = 4;
 	else
-		LOG(ERROR) << "²»Ö§³ÖµÄtype:" << type;
+		LOG(ERROR) << "ï¿½ï¿½Ö§ï¿½Öµï¿½type:" << type;
 
 	return tsize * csize;
 }
@@ -47,13 +47,13 @@ int getEleSize(string & componentType, string & type) {
 
 bool B3dm::load(istream & stm) {
 
-	//´ò¿ªÎÄ¼þ
+	//ï¿½ï¿½ï¿½Ä¼ï¿½
 	Header header;
 	stm.read((char*)&header, sizeof(Header));
-	//ÑéÖ¤
+	//ï¿½ï¿½Ö¤
 	if (!header.valid()) {
 
-		LOG(ERROR) << "½âÎö´íÎó";
+		LOG(ERROR) << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 		return false;
 	}
 	string ftjson;
@@ -64,7 +64,7 @@ bool B3dm::load(istream & stm) {
 	}
 
 
-	//¶ÁÈ¡featureTableBinary
+	//ï¿½ï¿½È¡featureTableBinary
 
 	string ftbin;
 	if (header.featureTableBinaryByteLength > 0) {
@@ -73,7 +73,7 @@ bool B3dm::load(istream & stm) {
 	}
 
 
-	//½âÎöfeaturetable
+	//ï¿½ï¿½ï¿½ï¿½featuretable
 	if (!ftjson.empty()) {
 
 
@@ -82,7 +82,7 @@ bool B3dm::load(istream & stm) {
 			json featureTableJSON;
 			featureTableJSON = json::parse(ftjson);
 			LOG_IF(INFO, reportInfo) << endl << "featureTableJSON:" << featureTableJSON.dump(4);
-			//½âÎöBATCH_LENGTH
+			//ï¿½ï¿½ï¿½ï¿½BATCH_LENGTH
 			if (featureTableJSON.find("BATCH_LENGTH") != featureTableJSON.end()) {
 				BATCH_LENGTH = featureTableJSON["BATCH_LENGTH"].get<uint32_t>();
 			}
@@ -94,16 +94,16 @@ bool B3dm::load(istream & stm) {
 		}
 	}
 
-	//¶ÁÈ¡batchTableJSON
+	//ï¿½ï¿½È¡batchTableJSON
 	if (header.batchTableJSONByteLength > 0) {
 
 		//https://github.com/AnalyticalGraphicsInc/3d-tiles/tree/master/TileFormats/BatchTable	
-		//Õâ¸öÓÃÀ´´æ´¢ÊôÐÔÓ³Éä
-		//Õâ¸öjsonÀïÓÐÁ½ÖÖÊôÐÔ
-		//1, Ò»¸öÊý×é ³¤¶ÈµÈÓÚbatchlength
-		//2, Ò»¸ö°üº¬ byteOffset, componentType, type Èý¸öÊôÐÔµÄÓ³Éä£¬Ö¸¶¨ÁË¸Ã×Ö¶Î´æ´¢ÔÚbatchTableBinaryÖÐ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
+		//ï¿½ï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//1, Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½batchlength
+		//2, Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ byteOffset, componentType, type ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½Ó³ï¿½ä£¬Ö¸ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½Ö¶Î´æ´¢ï¿½ï¿½batchTableBinaryï¿½ï¿½
 		json batchTableJSON;
-		//ÓÃÀ´´æ´¢Ò»Ð©Êý×éÀàÐÍµÄÊôÐÔ  
+		//ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢Ò»Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½  
 		string batchTableBinary;
 		string btjson;
 		btjson.resize(header.batchTableJSONByteLength);
@@ -111,16 +111,16 @@ bool B3dm::load(istream & stm) {
 
 		if (header.batchTableBinaryByteLength > 0) {
 
-			//Õâ²¿·Ö²Î¿¼ https://github.com/AnalyticalGraphicsInc/3d-tiles/tree/master/TileFormats/BatchTable ½âÎö
+			//ï¿½â²¿ï¿½Ö²Î¿ï¿½ https://github.com/AnalyticalGraphicsInc/3d-tiles/tree/master/TileFormats/BatchTable ï¿½ï¿½ï¿½ï¿½
 			batchTableBinary.resize(header.batchTableBinaryByteLength);
 			stm.read(const_cast<char *>(batchTableBinary.data()), batchTableBinary.size());
 		}
 
-		//½âÎö
+		//ï¿½ï¿½ï¿½ï¿½
 		try {
 			batchTableJSON = json::parse(btjson);
 			//LOG_IF(INFO, reportInfo) << endl << "batchTableJSON:" << batchTableJSON.dump(4);
-			//±éÀúÕâ¸ö
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			for (json::iterator it = batchTableJSON.begin(); it != batchTableJSON.end(); ++it) {
 				string key = it.key();
 				auto obj = it.value();
@@ -132,14 +132,14 @@ bool B3dm::load(istream & stm) {
 					bd->jsonData = obj;
 				}
 				else {
-					//»ñÈ¡offset
+					//ï¿½ï¿½È¡offset
 					int byteOffset = obj["byteOffset"].get<int>();
 					string  componentType = obj["componentType"].get<string>();
 					string  type = obj["type"].get<string>();
-					//ÒÀ¾ÝcomponentType ºÍ type BATCH_LENGTH ¼ÆËã´óÐ¡
-					//Èç¹ûBATCH_LENGTH Îª 0, ÄÇÃ´¾ÍÊÇÖðµã
+					//ï¿½ï¿½ï¿½ï¿½componentType ï¿½ï¿½ type BATCH_LENGTH ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
+					//ï¿½ï¿½ï¿½BATCH_LENGTH Îª 0, ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					int size = getEleSize(componentType, type) * BATCH_LENGTH;
-					//¿½±´Êý¾Ý
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					bd->binData.componentType = componentType;
 					bd->binData.type = type;
 					bd->binData.data.resize(size);
@@ -173,12 +173,11 @@ size_t componentTypeSize(string componentType) {
 
 }
 
-bool B3dm::save(ostream & stm, string & gltfcontent) {
+bool B3dm::save(ostream& stm, string& gltfcontent) {
 
- 
-	//¹¹ÔìfeatureTableBinary
+	//ï¿½ï¿½ï¿½ï¿½featureTableBinary
 	string featureTableBinary;
-	//¹¹ÔìfeatureTableJSON
+	//ï¿½ï¿½ï¿½ï¿½featureTableJSON
 	json featureTableJSON;
 	featureTableJSON["BATCH_LENGTH"] = BATCH_LENGTH;
 	string jtjson = featureTableJSON.dump();
@@ -190,11 +189,11 @@ bool B3dm::save(ostream & stm, string & gltfcontent) {
 	json batchTableJSON;
 	string batchTableBinary;
 	for (auto & d : batchDatas) {
-		//Èç¹ûÊÇjson
+		//ï¿½ï¿½ï¿½ï¿½ï¿½json
 		if (!d->jsonData.is_null()) {
 			batchTableJSON[d->name] = d->jsonData;
 		}
-		//¶þ½øÖÆ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		else {
 			json bin;
 			bin["componentType"] = d->binData.componentType;
@@ -210,30 +209,26 @@ bool B3dm::save(ostream & stm, string & gltfcontent) {
 			batchTableJSON[d->name] = bin;
 			batchTableBinary.resize(offset + d->binData.data.size());
 
-			
-
 			memcpy(const_cast<char *>(batchTableBinary.data()) + offset, d->binData.data.data(), d->binData.data.size());
 		
-			//Õâ¿éÒÀÈ»ÓÐÇ±ÔÚÎÊÌâ£¬¿ÉÄÜ²»ÄÜ±»4Õû³ý£¬ÒÀÈ»±¨´í
-			//×Ö½Ú¶ÔÆë
 			while (batchTableBinary.size() % 8 != 0) {
 				batchTableBinary.push_back(0);
 			}
 		}
 	}
-	//Éú³Ébtjson
+
+	//ï¿½ï¿½ï¿½ï¿½btjson
 	string btjson;
 	if (!batchTableJSON.is_null()) {
 		btjson = batchTableJSON.dump();
-		//×Ö½Ú¶ÔÆë
+		//ï¿½Ö½Ú¶ï¿½ï¿½ï¿½
 		while (btjson.size() % 8 != 0) {
 			btjson.push_back(' ');
 		}
 		LOG_IF(INFO, reportInfo) << endl << "batchTableJSON:" << batchTableJSON.dump(4);
 	}
 
-
-	//¹¹Ôìheader
+	//ï¿½ï¿½ï¿½ï¿½header
 	Header header;
 	header.version = 1;
 	header.featureTableJSONByteLength = jtjson.size();
@@ -241,17 +236,17 @@ bool B3dm::save(ostream & stm, string & gltfcontent) {
 	header.batchTableJSONByteLength = btjson.size();
 	header.batchTableBinaryByteLength = batchTableBinary.size();
 
-	//¼ÆËã×Ü³¤¶È
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ü³ï¿½ï¿½ï¿½
 	header.byteLength = sizeof(Header) + header.batchTableBinaryByteLength + header.batchTableJSONByteLength +
 		header.featureTableJSONByteLength + header.featureTableBinaryByteLength + gltfcontent.size();
 	
 	
-	//Ð´Èëheader
+	//Ð´ï¿½ï¿½header
 	stm.write((char*)&header, sizeof(Header));
 
-	//Ð´ÈëfeatureTableJSON
+	//Ð´ï¿½ï¿½featureTableJSON
 	stm.write(const_cast<char *>(jtjson.data()), jtjson.size());
-	//Ð´ÈëfeatureTableBinary
+	//Ð´ï¿½ï¿½featureTableBinary
 	if (!featureTableBinary.empty())
 		stm.write(const_cast<char *>(featureTableBinary.data()), featureTableBinary.size());
 	if (!btjson.empty())
@@ -261,6 +256,5 @@ bool B3dm::save(ostream & stm, string & gltfcontent) {
 	
 	stm.write(gltfcontent.data(), gltfcontent.size());
  
-
 	return true;
 }

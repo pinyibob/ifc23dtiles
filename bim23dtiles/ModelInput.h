@@ -13,7 +13,7 @@ namespace XBSJ {
 	class ModelInput
 	{
 	public:
-		ModelInput(json& config,  shared_ptr<ModelInputReader>& reader, int index);
+		ModelInput(json& config, shared_ptr<ModelInputReader>& reader, int index);
 		~ModelInput();
 
 		// key enter
@@ -29,6 +29,7 @@ namespace XBSJ {
 	public:
 
 		shared_ptr<BimScene> scene;
+		shared_ptr<BimScene> shell_scene;
 
 		//输入文件
 		string inputfile = "";
@@ -92,7 +93,7 @@ namespace XBSJ {
 
 		//void  sceneSpheres(SceneOutputConfig * config, list<json> & nodespheres);
 		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json& config);
-		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json& config, const std::vector<std::uint32_t>& ids);
+		static  bool GenInputs(list<shared_ptr<ModelInput>> &inputs, json& config, const std::set<std::uint32_t>& ids);
 		static string ExeFolder;
 
 		void fillSceneTree(json & j);

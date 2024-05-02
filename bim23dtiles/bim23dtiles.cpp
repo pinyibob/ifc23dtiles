@@ -200,6 +200,8 @@ int main(int argc, char * argv[])
 	}
 	if(select_ids.empty())
 		errorOut("shell get failed");
+	
+	std::set<std::uint32_t>set_shell_id(select_ids.begin(), select_ids.end());
 
 	//output task
 	shared_ptr<SceneOutputConfig> output = make_shared<SceneOutputConfig>();
@@ -214,7 +216,7 @@ int main(int argc, char * argv[])
 		list<shared_ptr<ModelInput>> inputs;
 		for (size_t i = 0; i < cinputs.size(); i++)
 		{
-			if (!ModelInput::GenInputs(inputs, cinputs[i], select_ids)) {
+			if (!ModelInput::GenInputs(inputs, cinputs[i], set_shell_id)) {
 				LOG(WARNING) << "gen inputs failed:"<<i;
 			}
 		}

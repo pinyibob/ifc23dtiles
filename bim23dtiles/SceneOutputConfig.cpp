@@ -132,13 +132,23 @@ namespace XBSJ {
 		return true;
 	}
  
-	bool SceneOutputConfig::process(shared_ptr<ModelInput> input, size_t idx) {
+	bool SceneOutputConfig::process(shared_ptr<ModelInput> input, size_t idx)
+	{
+		//1 shell info create
+		//auto shell_input = make_shared<ModelInput>();
+		//std::memcpy(shell_input.get(), input.get(), sizeof(input.get()));
+		// input->shell_scene = input->scene->copy();
+		// input->shell_scene->elements.clear();
+		// for(auto item : input->scene->elements){
+		// 	if(item->_bShell)
+		// 		input->shell_scene->elements.push_back(item);
+		// }
 
 		//1, 场景分割
 		shared_ptr<SubSceneSplitor> splitor = make_shared<SubSceneSplitor>();
 		{
 			ProgressHelper pinput("split input", 1, 0.2);
-			if (!splitor->split(input.get())) {
+			if (!splitor->split(input.get(), input->scene)) {
 				LOG(WARNING) << "splitor input failed";
 				return false;
 			}

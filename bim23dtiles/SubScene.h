@@ -82,7 +82,7 @@ namespace  XBSJ
 	{
 	public:
 		 
-		bool split(ModelInput * input);
+		bool split(ModelInput* input, std::shared_ptr<BimScene> ic);
 
 		list<shared_ptr<SubScene>> subscenes;
 

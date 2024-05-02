@@ -196,6 +196,12 @@ namespace XBSJ {
 		return true;
 	}
 
+	std::shared_ptr<BimScene> BimScene::copy() const
+	{
+		auto i = std::make_shared<BimScene>();
+		std::memcpy(i.get(), this, sizeof(this));
+		return i;
+	}
 
 	shared_ptr<ModelMaterial> BimScene::getMaterial(shared_ptr<ModelMaterial> & material) {
 
